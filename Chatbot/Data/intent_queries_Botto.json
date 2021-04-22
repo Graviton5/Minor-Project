@@ -441,19 +441,6 @@
                 "function": ""
             }
         },
-        "Location": {
-            "text": [
-                "location",
-                "where",
-                "address",
-                "place"
-            ],
-            "responses": [
-                "Location of <LOC> is ",
-                "<LOC> is at",
-                "Address of <LOC> is at"
-            ]
-        },
         "OutOfScope": {
             "text": [],
             "responses": [
@@ -467,6 +454,31 @@
             "extension": {
                 "function": ""
             }
+        },
+        "Location": {
+            "text": [
+                "Where is MUJ?",
+                " How do I find Manipal University Jaipur?",
+                " How do I locate this college?",
+                " Where is this University?",
+                " What is the address of this university?",
+                " What is the address of MUJ?"
+            ],
+            "responses": [
+                "Manipal University Jaipur, Dehmi Kalan, Off Jaipur-Ajmer Expressway, Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 More details can be found on: https://jaipur.manipal.edu/muj/contact-us.html"
+            ]
+        },
+        "Owner": {
+            "text": [
+                "Who is the President of this College?",
+                " Who is the head of this University?",
+                " What is the name of the President of Manipal University Jaipur?",
+                " Who is the Dead of this College?",
+                " Does this college have a head?"
+            ],
+            "responses": [
+                "The more details about board of management can be found at https://jaipur.manipal.edu/muj/about-us/board-of-management.html"
+            ]
         }
     },
     "Queries": {

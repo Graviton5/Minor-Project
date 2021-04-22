@@ -16,7 +16,7 @@ import tensorflow as tf
 class ANNClassifier:
 
 	### Running Function
-	def start(data, test=False, intents=True,):
+	def create(data, test=False, intents=True, labelFile='Labels', modelName='Chatbot', dictKey= '', hidden_neurons=28, epochs=200):
 		dataX = []
 		dataY = []
 		if intents:
@@ -25,17 +25,20 @@ class ANNClassifier:
 					dataX.append(sentence)
 					dataY.append(key)
 		else:
-			pass
-		model = ANNClassifier.train(dataX, dataY, hidden_neurons=28, alpha=1, epochs=200, test= test)
-		ANNClassifier.saveModel(model)
+			for key in data[dictKey]:
+				for sentence in data[dictKey][key]:
+					dataX.append(sentence)
+					dataY.append(key)
+		model = ANNClassifier.train(dataX, dataY, hidden_neurons=hidden_neurons, alpha=1, epochs=epochs, test= test, modelName=modelName,labelFile=labelFile)
+		# ANNClassifier.saveModel(model, modelName)
 
 
 	### Collect Data from json file
 	def collectData(filename):
 		with open(filename) as f:
 			data = json.load(f)
-
 		return data
+
 	### Create Training Data
 	def training_data(data, queries=False):
 		traindata = []
@@ -52,7 +55,7 @@ class ANNClassifier:
 		return traindata
 
 	### Use bag of words and training data to produce a model in an ANN
-	def train(dataX,dataY,hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5,test = False):
+	def train(dataX,dataY,hidden_neurons=10, alpha=1, epochs=500, dropout=False, dropout_percent=0.5,test = False, labelFile='Labels',modelName='Chatbot'):
 		words = []
 		classes = list(set(dataY))
 		trainX = []
@@ -87,23 +90,20 @@ class ANNClassifier:
 		model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 		model.fit(trainX, trainY, epochs=epochs, batch_size=10)
-		model.save("Data/Chatbot_model.h5")
+		model.save("Data/"+modelName+".h5")
 
 		dictionary = {'words': words, "classes": classes}
-		with open("Data/Labels.json",'w', encoding='utf8') as f:
+		with open("Data/"+labelFile+".json",'w', encoding='utf8') as f:
 			json.dump(dictionary, f, indent = 4)
 		return model
-	### Save model
-	def saveModel(model):
-		pass
 
-	def prediction(ipstring, Threshold = 0.2):
-		with open("Data/Labels.json", 'r', encoding='utf8') as f:
+	def prediction(ipstring, Threshold = 0.2,modelName='Chatbot',labelFile='Labels'):
+		with open("Data/"+labelFile+'.json', 'r', encoding='utf8') as f:
 			data = json.load(f)
 
 		words = data['words']
 		classes = data['classes']
-		new_model = tf.keras.models.load_model('Data/Chatbot_model.h5')
+		new_model = tf.keras.models.load_model('Data/'+modelName+".h5")
 		ignore_words = list(string.punctuation)
 		stemmer = LancasterStemmer() 
 		w = nltk.word_tokenize(ipstring)
@@ -121,7 +121,7 @@ class ANNClassifier:
 if __name__ == '__main__':
 	# data = ANNClassifier.collectData("Data/intent_ANN.json")
 	# data = data['intents']
-	# ANNClassifier.start(data)
+	# ANNClassifier.create(data)
 
 	ip = ''
 

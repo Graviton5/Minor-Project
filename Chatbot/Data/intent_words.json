@@ -441,18 +441,6 @@
                 "function": ""
             }
         },
-        "Location":{
-            "text":["location",
-                    "where",
-                    "address",
-                    "place"
-                    ],
-            "responses":[
-                "Location of <LOC> is ",
-                "<LOC> is at",
-                "Address of <LOC> is at"
-            ]
-        },
         "OutOfScope": {
             "text": [],
             "responses": [

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manipal University Jaipur Demo</title>
+	<!-- for demo webpage--><link rel="stylesheet" type="text/css" href="../static/styles.css">
+	<!-- for chatbox--><link rel="stylesheet" type="text/css" href="../static/chatstyle.css?x=2sdfc0">
+	<!-- for demo webpage--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"-->
+	<!-- for chatbox--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chatstyle.css') }}"-->
+</head>
+<body>
+    <div class="header">
+        <div class="header1">
+            Announcements
+        </div>
+        <div class="header2">
+            <ul>
+                <li>NAAC</li>
+                <li>NAAC1</li>
+                <li>NAAC2</li>
+                <li>NAAC3</li>
+                <li>NAAC4</li>
+            </ul>
+        </div>
+        <div class="header3">
+            <img src="../static/logo.jpg" alt="">
+        </div>
+    </div>
+    <div class="container">
+        <img src="../static/1.jpg" alt="">
+        <img src="../static/3.jpg" alt="">
+        <img src="../static/4.jpg" alt="">
+    </div>
+
+    <img src="../static/bot.jpg" alt="Botto" id="chatbot_logo" onclick="show_bot();">
+    <div id="chatbox">
+        <div class="chat">
+            <div class="head_name">
+                <img src="../static/bot.jpg" alt="Botto" id="head_name_logo">
+                <h3>Botto</h3>
+                <h2 id="minimize" onclick="hide_bot();">-</h2>
+            </div>
+            <div class="chat_logs" id="chat_logs">
+                
+            </div>
+            <div class="enter"><form>
+                <input type="text" name="user_msg" id="txt_msg" placeholder="Type here...">
+                <button type="submit" id="btn_submit"><img src="../static/send_btn.png" alt=""></button>
+            </form></div>
+        </div>
+    </div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  	<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
+  	<script type="text/javascript">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on( 'connect', function() {
+		socket.emit( 'my event', {
+			data: 'User Connected'
+		} )
+		var form = $( 'form' ).on( 'submit', function( e ) {
+			e.preventDefault()
+			let user_input = ''
+			user_input=$( 'input#txt_msg' ).val()
+			socket.emit( 'my event', {
+			'message' : user_input
+			} )
+			$( 'div.chat_logs' ).append( '<div class="line"><div class="user_reply">'+user_input+'</div></div>' )
+			$( 'input#txt_msg' ).val( '' ).focus()
+            var element = document.getElementById("chat_logs");
+            element.scrollTop = element.scrollHeight;
+		} )
+    } )
+    socket.on( 'my response', function( msg ) {
+    console.log( msg )
+    $( 'div.chat_logs' ).append( '<div class="line"><div class="bot_reply">'+msg.message+'</div></div>' )
+    
+    var element = document.getElementById("chat_logs");
+    element.scrollTop = element.scrollHeight;
+    })
+	socket.on('disconnect',function(){
+		$('div.chat_logs').append('<div class="line"><div class="bot_reply"><b>Server Disconnected</b></div></div>')
+		document.getElementById('btn_submit').disabled=true
+	})
+	socket.on('quit it',function(){
+		socket.disconnect()
+	})
+        var bot=true;
+        function show_bot()
+        {
+            document.getElementById('chatbot_logo').style.display="none";
+            document.getElementById('chatbox').style.display="block";
+        }
+        function hide_bot()
+        {
+            document.getElementById('chatbot_logo').style.display="block";
+            document.getElementById('chatbox').style.display="none";
+        }
+    </script>
+</body>
+</html>

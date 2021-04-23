@@ -1,0 +1,52 @@
+body{
+	background-color: #AAA;
+	margin:0;
+}
+
+.MainWindow {
+	/*display:block;*/
+	margin: 5vh auto;
+	padding:0;
+	width:80vw;
+	height:90vh;
+	display:flex; 
+	flex-direction:column; 
+	flex:1;
+	background-color: #CCC;
+}
+
+.chatbox-header {
+	text-align: center;
+	background-color: #999;
+	padding: 0.1% 0;
+	font-size: 2em;
+}
+.inputText {
+	background-color: #BBB;
+	margin-top: auto;
+	padding: 2%;
+}
+
+.inputText input[type=text] {
+	width: 80%;
+	border: 2px solid black;
+  	border-radius: 4px;
+  	background-color: #AAA;
+  	resize: none;
+  	height: 5vh;
+
+}
+
+.inputText input[type=text]:focus {
+  background-color: #EEE;
+
+}
+
+.inputText button {
+	width: 10%;
+	/*border: 2px solid black;*/
+  	border-radius: 4px;
+  	background-color: #EEE;
+  	resize: none;
+  	height: 5.5vh;
+}

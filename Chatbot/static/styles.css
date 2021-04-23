@@ -1,0 +1,43 @@
+html,body{
+    margin:0px;
+}
+.header{
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+}
+.header1{
+    width: 100%;
+    background-color: rgb(141, 11, 11);
+    padding: 5px;
+}
+.header2{
+    margin: 0px;
+    padding: 5px;
+    background-color: rgb(247, 235, 235);
+    display: block;
+    overflow: auto;
+}
+.header2 ul{
+    list-style-type: none;
+    margin: 0px;
+}
+.header2 ul li{
+    float: right;
+    margin-right: 20px;
+}
+.header3{
+    background-color: rgb(255, 208, 0);
+    display: block;
+    overflow: auto;
+    padding: 0px;
+}
+.header3 img{
+    margin: 0px;
+}
+.container{
+    width: 100%;
+}
+.container img{
+    width: 100%;
+}

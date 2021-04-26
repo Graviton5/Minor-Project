@@ -91,33 +91,6 @@
                 "function": ""
             }
         },
-        "TimeQuery": {
-            "text": [
-                "Time now",
-                "Time currently",
-                "What is the time?",
-                "Do you know what time it is?",
-                "Do you know the time?",
-                "Can you tell me the time?",
-                "Tell me what time it is?",
-                "Time",
-                "Can I know the current time?"
-            ],
-            "responses": [
-                "One moment, fetching timezone...",
-                "One moment, checking my  watch",
-                "One moment, let me fetch it for you",
-                "One sec, fetching timezone...",
-                "One sec, checking my  watch",
-                "One sec, let me fetch it for you",
-                "One second, fetching timezone...",
-                "One second, checking my  watch",
-                "One second, let me fetch it for you"
-            ],
-            "extension": {
-                "function": "fetchTime"
-            }
-        },
         "Thanks": {
             "text": [
                 "thank you",
@@ -475,24 +448,6 @@
             "extension": {
                 "function": ""
             }
-        },
-        "Location":{
-            "text":["Where is the location of this business",
-                    "where is this?",
-                    "Where can I find this?",
-                    "I need help finding the address of this place.",
-                    "I need the address of the business",
-                    "I need the address of the organization",
-                    "I need the address of your owners",
-                    "Where is that place?",
-                    "What place is that?",
-                    "What is that place?"
-                    ],
-            "responses":[
-                "Location of <LOC> is ",
-                "<LOC> is at",
-                "Address of <LOC> is at"
-            ]
         },
         "OutOfScope": {
             "text": [],

@@ -97,13 +97,11 @@ class ANNClassifier:
 			json.dump(dictionary, f, indent = 4)
 		return model
 
-	def prediction(ipstring, Threshold = 0.2,modelName='Chatbot',labelFile='Labels'):
-		with open("Data/"+labelFile+'.json', 'r', encoding='utf8') as f:
-			data = json.load(f)
+	def prediction(ipstring, intents, model, labels, Threshold = 0.2):
 
-		words = data['words']
-		classes = data['classes']
-		new_model = tf.keras.models.load_model('Data/'+modelName+".h5")
+		words = labels['words']
+		classes = labels['classes']
+		
 		ignore_words = list(string.punctuation)
 		stemmer = LancasterStemmer() 
 		w = nltk.word_tokenize(ipstring)
@@ -112,11 +110,22 @@ class ANNClassifier:
 
 		for wrd in words:
 			bag.append(1) if wrd in w else bag.append(0)
-		prediction = new_model.predict([bag])
-		if np.max(prediction) > Threshold:
+
+		prediction = model.predict([bag])
+		if np.max(prediction) > Threshold and classes[np.argmax(prediction)] in intents:
 			return [classes[np.argmax(prediction)]]
 		else:
 			return ['OutOfScope']
+
+	def load_labels(labelFile='Labels'):
+		with open("Data/"+labelFile+'.json', 'r', encoding='utf8') as f:
+			data = json.load(f)
+		return data
+
+
+	def load_model(modelName='Chatbot'):
+		new_model = tf.keras.models.load_model('Data/'+modelName+".h5")
+		return new_model
 
 if __name__ == '__main__':
 	# data = ANNClassifier.collectData("Data/intent_ANN.json")

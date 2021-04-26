@@ -13,6 +13,8 @@ from nltk.corpus import stopwords
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 import string
+from textblob import TextBlob
+
 
 
 class Bot:
@@ -32,6 +34,7 @@ class Bot:
 		self.dbPath = "Data/Bot_"+name+".db"
 		self.qPath = "Data/intent_queries_"+name+".json"
 		self.variables = {}
+		self.defaultQPath = "Data/intent_words.json"
 
 
 	### DATA HANDLING ###
@@ -82,7 +85,7 @@ class Bot:
 			c.close()
 
 		if (overwrite or (os.path.exists(self.qPath) == False)):
-			with open("Data/intent_words.json","r", encoding='utf8') as f:
+			with open(self.defaultQPath,"r", encoding='utf8') as f:
 				data = json.load(f)
 
 				data["Queries"]["QueryNames"] = {}
@@ -92,7 +95,7 @@ class Bot:
 					data["Queries"]["QueryNames"][row[0]] = [s.strip() for s in list(row[1].split(","))]
 
 			### If there is an error the actual file won't  be created and the error can be identified ###
-			tempfile = os.path.join(os.path.dirname("Data/intent_words.json"), str(uuid.uuid4()))
+			tempfile = os.path.join(os.path.dirname(self.defaultQPath), str(uuid.uuid4()))
 			
 			with open(tempfile, 'w', encoding='utf8') as f:
 				json.dump(data, f, indent=4)
@@ -115,7 +118,7 @@ class Bot:
 		if(os.path.exists(self.qPath)):
 			filename = self.qPath
 		else:
-			filename = "Data/intent_words.json"
+			filename = self.defaultQPath
 
 
 		with open(filename, 'r', encoding='utf8') as file:
@@ -408,6 +411,16 @@ class Bot:
 	# 	location = geolocator.geocode(address)
 
 	# 	return location.address
+	def spellCheck(self, inputstr):
+		corrections = []
+		words = inputstr.split()
+		for word in words:
+			correct = TextBlob(word.lower())
+			if(str(correct.correct()).lower() != word.lower()):
+				corrections.append((str(correct.correct()),word))
+
+		return corrections
+
 
 if __name__ == "__main__":
 
@@ -466,14 +479,14 @@ if __name__ == "__main__":
 
 			###SELF LEARNING DATA COLLECTION CODE REMOVE COMMENTS TO RUN WITH OUT SELF LEARNING
 
-			yield Bot.ResponseStr("Would you like to contribute by providing a possible response to your previous query?") + "\n" + Fore.BLUE + "User: " + Style.RESET_ALL
-			ip = str(input())
+			# yield Bot.ResponseStr("Would you like to contribute by providing a possible response to your previous query?") + "\n" + Fore.BLUE + "User: " + Style.RESET_ALL
+			# ip = str(input())
 
-			if Bot.Confirm(ip, default=False):
-				Bot.selfLearnCollect(inputstr,ip)
-				yield Bot.ResponseStr("Thank you for putting effort in making me better!\n")
-			else:
-				yield Bot.ResponseStr("Okay, continuing to solve your queries\n")
+			# if Bot.Confirm(ip, default=False):
+			# 	Bot.selfLearnCollect(inputstr,ip)
+			# 	yield Bot.ResponseStr("Thank you for putting effort in making me better!\n")
+			# else:
+			# 	yield Bot.ResponseStr("Okay, continuing to solve your queries\n")
 
 		elif(Bot.Time in found):
 			yield Bot.ResponseStr("Current time is " + str(Bot.timeFetch())) + "\n"
@@ -489,47 +502,63 @@ if __name__ == "__main__":
 	Chatbot = Bot("Botto")
 
 
-	#Upload Queries Dataset (Optional)
-
-	file = "Program Details.xlsx"
-	keyCol = "Program Name"
-	uniqueWordCol = "Full Name"
-	queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
-	Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
-
-	#Enter similar words for query types (Optional)
-
-	dict_words = {"all":['complete', 'everything', 'all', 'total', 'full'],
-	"Course":["May I know your course?","I need to know your Course first","Can you tell me your course?""offered courses","education options"],
-	"Eligibility":["Eligibility", "eligibility","admission details","admission","exam","MET","Entrance Test","Marks"], 
-	"Scope":["Scope"], 
-	"Admission Criteria":["course criteria","criteria","admission criteria","admission"], 
-	"Duration":["duration","length of course","time of the course","help"]}
-
-
-	### COMMENT THIS LINE BELOW AFTER CREATING IT FIRST TO IMPROVE THE LOAD TIMES
-	Chatbot.load_querytypes(dict_words) 
-
-	# new_intents = { "Location":{"text":["location","where","address","place"],"responses":["Location of <LOC> is ","<LOC> is at","Address of <LOC> is at"]}}
-	
-	#Produce input nad outputs
-	colorama.init()
-
-	print(Chatbot.botGreeting())
-
-	intents = Chatbot.init_intents
-	intents.append(Bot.Query)
-	intents.append(Bot.Contact)
-
-
 	USE_PATTERN = False
 
 	if USE_PATTERN:
 
+
+		#Upload Queries Dataset (Optional)
+
+		file = "Program Details.xlsx"
+		keyCol = "Program Name"
+		uniqueWordCol = "Full Name"
+		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
+		Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
+
+		#Enter similar words for query types (Optional)
+
+		dict_words = {"all":['complete', 'everything', 'all', 'total', 'full'],
+		"Course":["May I know your course?","I need to know your Course first","Can you tell me your course?""offered courses","education options"],
+		"Eligibility":["Eligibility", "eligibility","admission details","admission","exam","MET","Entrance Test","Marks"], 
+		"Scope":["Scope"], 
+		"Admission Criteria":["course criteria","criteria","admission criteria","admission"], 
+		"Duration":["duration","length of course","time of the course","help"]}
+
+
+		### COMMENT THIS LINE BELOW AFTER CREATING IT FIRST TO IMPROVE THE LOAD TIMES
+		Chatbot.load_querytypes(dict_words) 
+
+		# new_intents = { "Location":{"text":["location","where","address","place"],"responses":["Location of <LOC> is ","<LOC> is at","Address of <LOC> is at"]}}
+		
+		#Produce input nad outputs
+
+		intents = Chatbot.init_intents
+		intents.append(Bot.Query)
+		intents.append(Bot.Contact)
+
+
+		colorama.init()
+
+		print(Chatbot.botGreeting())
 		while(True):
 			print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
-
 			inputstr = str(input())
+			corrections = Chatbot.spellCheck(inputstr)
+			if corrections != []:
+				for correction in corrections:
+					inputstr2 = inputstr.replace(correction[1], correction[0])
+				print(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+
+				print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
+				ip = str(input())
+
+				if Chatbot.Confirm(ip, default=False):
+					inputstr = inputstr2
+				# else:
+				# 	print(Chatbot.ResponseStr("Please try again"))
+				# 	continue
+
+
 			found = Chatbot.checkIntents(intents= intents, input=inputstr)
 			for intents in ConversationFlow(Chatbot, inputstr, intents, found, keyCol=keyCol):
 				if(type(intents) != list):
@@ -540,17 +569,78 @@ if __name__ == "__main__":
 				break
 	else:
 
+
+		Chatbot.defaultQPath = "Data/intent_ANN.json"
+		#Upload Queries Dataset (Optional)
+
+		file = "Program Details.xlsx"
+		keyCol = "Program Name"
+		uniqueWordCol = "Full Name"
+		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
+		Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
+
+		#Enter similar words for query types (Optional)
+
+		dict_words = {"all":['complete', 'everything', 'all', 'total', 'full'],
+		"Course":["May I know your course?","I need to know your Course first","Can you tell me your course?"],
+		"Eligibility":["Eligibility", "eligibility","admission details","admission","exam","MET","Entrance Test","Marks"], 
+		"Scope":["Scope"], 
+		"Admission Criteria":["course criteria","criteria","admission criteria","admission"], 
+		"Duration":["duration","length of course","time of the course","help"]}
+
+
+		### COMMENT THIS LINE BELOW AFTER CREATING IT FIRST TO IMPROVE THE LOAD TIMES
+		Chatbot.load_querytypes(dict_words) 
+
+		# new_intents = { "Location":{"text":["location","where","address","place"],"responses":["Location of <LOC> is ","<LOC> is at","Address of <LOC> is at"]}}
+		
+		#Produce input and outputs
+
+		intents = Chatbot.init_intents
+		intents.append(Bot.Query)
+		intents.append(Bot.Contact)
+
 		Chatbot.modify_intents_excel(filename="General Queries.xlsx" ,keyCol='Query', textCol='Questions', responseCol='Response', textSeparator=',', respSeparator = '\n')
+		
+		intents.append("Location")
+		intents.append("Owner")
+		intents.append("Timings")
 
 		### Train Neural Network
-		data = ANN.ANNClassifier.collectData("Data/intent_ANN.json")
+		data = ANN.ANNClassifier.collectData(Chatbot.qPath)
 		data = data['intents']
-		ANN.ANNClassifier.create(data, labelFile="Labels_" + Chatbot.name, modelName="Chatbot_" + Chatbot.name)
+
+		labelFile = "Labels_" + Chatbot.name
+		modelFile = "Chatbot_" + Chatbot.name
+
+		
+		ANN.ANNClassifier.create(data, labelFile=labelFile, modelName=modelFile)
+		data = ANN.ANNClassifier.load_labels(labelFile=labelFile)
+		
+		newmodel = ANN.ANNClassifier.load_model(modelName=modelFile)
+
+		colorama.init()
+		print(Chatbot.botGreeting())
 
 		while(True):
 			print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
 			inputstr = str(input())
-			found = ANN.ANNClassifier.prediction(inputstr, labelFile='Labels_'+Chatbot.name, modelName='Chatbot_'+Chatbot.name)
+			corrections = Chatbot.spellCheck(inputstr)
+			if corrections != []:
+				for correction in corrections:
+					inputstr2 = inputstr.replace(correction[1], correction[0])
+				print(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+
+				print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
+				ip = str(input())
+
+				if Chatbot.Confirm(ip, default=False):
+					inputstr = inputstr2
+				# else:
+				# 	print(Chatbot.ResponseStr("Please try again"))
+				# 	continue
+
+			found = ANN.ANNClassifier.prediction(inputstr, intents, model = newmodel, labels=data)
 
 			for intents in ConversationFlow(Chatbot, inputstr, intents, found, keyCol=keyCol):
 				if(type(intents) != list):

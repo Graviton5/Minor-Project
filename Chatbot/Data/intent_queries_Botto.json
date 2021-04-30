@@ -15,7 +15,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 0
         },
         "Greeting": {
             "text": [
@@ -39,7 +40,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 7
         },
         "BotEnquiry": {
             "text": [
@@ -62,7 +64,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 12
         },
         "NameQuery": {
             "text": [
@@ -86,7 +89,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 18
         },
         "TimeQuery": {
             "text": [
@@ -113,7 +117,8 @@
             ],
             "extension": {
                 "function": "fetchTime"
-            }
+            },
+            "vocabSize": 20
         },
         "Thanks": {
             "text": [
@@ -133,7 +138,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 10
         },
         "UnderstandQuery": {
             "text": [
@@ -155,7 +161,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 20
         },
         "Swearing": {
             "text": [
@@ -176,7 +183,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 8
         },
         "GoodBye": {
             "text": [
@@ -197,7 +205,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 20
         },
         "CourtesyGoodBye": {
             "text": [
@@ -212,7 +221,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 3
         },
         "Jokes": {
             "text": [
@@ -368,7 +378,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 5
         },
         "SelfAware": {
             "text": [
@@ -385,7 +396,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 4
         },
         "Query": {
             "text": [
@@ -403,7 +415,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 9
         },
         "Contact": {
             "text": [
@@ -414,7 +427,8 @@
             "responses": [],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 4
         },
         "Agree": {
             "text": [
@@ -427,7 +441,8 @@
             "responses": [],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 5
         },
         "Disagree": {
             "text": [
@@ -439,7 +454,8 @@
             "responses": [],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 4
         },
         "OutOfScope": {
             "text": [],
@@ -453,7 +469,8 @@
             ],
             "extension": {
                 "function": ""
-            }
+            },
+            "vocabSize": 0
         },
         "Location": {
             "text": [
@@ -466,7 +483,8 @@
             ],
             "responses": [
                 "Manipal University Jaipur, Dehmi Kalan, Off Jaipur-Ajmer Expressway, Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 More details can be found on: https://jaipur.manipal.edu/muj/contact-us.html"
-            ]
+            ],
+            "vocabSize": 19
         },
         "Owner": {
             "text": [
@@ -478,6 +496,21 @@
             ],
             "responses": [
                 "The more details about board of management can be found at https://jaipur.manipal.edu/muj/about-us/board-of-management.html"
+            ],
+            "vocabSize": 20
+        },
+        "Timings": {
+            "text": [
+                "What is the timing of the College?",
+                " What time the college is open?",
+                " May I know the time I can contact Manipal University Jaipur?",
+                " How long the college will stay open?",
+                " What are the timings of MUJ?",
+                " At what time is the college open?",
+                " What is the time I can contact the University?"
+            ],
+            "responses": [
+                "The College timings are 9:00 to 18:00 in Indian Standard Time (IST)"
             ]
         }
     },
@@ -942,8 +975,7 @@
             "Course": [
                 "May I know your course?",
                 "I need to know your Course first",
-                "Can you tell me your course?offered courses",
-                "education options"
+                "Can you tell me your course?"
             ],
             "Eligibility": [
                 "Eligibility",

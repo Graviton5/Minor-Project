@@ -1,8 +1,8 @@
 from flask import Flask, render_template, session
 from flask_socketio import SocketIO
 from flask_socketio import join_room,leave_room
-#import Chatbot
-import demo
+import Chatbot
+#import demo
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'n8gvw9nun1235nj'
@@ -22,8 +22,8 @@ def connected():
     global rooms 
     global rooms_free
     global rooms_occupied
-    #session['Chatbot'],session['intents'],message=Chatbot.start()
-    session['Chatbot'],session['intents'],message="Chatbot","intents","Welcome!"
+    session['Chatbot'],session['intents'],message,session['type']=Chatbot.start()
+    #session['Chatbot'],session['intents'],message="Chatbot","intents","Welcome!"
     session['state']={'state':0}
     if not rooms_free:
         rooms+=1 
@@ -55,8 +55,8 @@ def disconnected():
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
     if 'message' in json:
-        #session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=Chatbot.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'])
-        session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=demo.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'])
+        session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=Chatbot.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'],session['type'])
+        #session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=demo.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'])
         for x in json['message']:
             socketio.emit('my response', {'message':x},to=session['room'])
         if not session['f']:

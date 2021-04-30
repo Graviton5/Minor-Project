@@ -23,7 +23,7 @@ class Bot:
 	OutOfScope = "OutOfScope"
 	Time = "TimeQuery"
 	Location = "Location"
-	init_intents = ["Query", "Greeting", "BotEnquiry", "Contact", "TimeQuery", "NameQuery", "Swearing", "Thanks", "GoodBye", "CourtesyGoodBye", "Jokes", "SelfAware"]
+	init_intents = ["Query", "Greeting", "BotEnquiry", "Contact", "NameQuery", "Swearing", "Thanks", "GoodBye", "CourtesyGoodBye", "Jokes", "SelfAware"]
 	
 	def __init__(self, name):
 		self.name = name
@@ -35,9 +35,23 @@ class Bot:
 		self.qPath = "Data/intent_queries_"+name+".json"
 		self.variables = {}
 		self.defaultQPath = "Data/intent_words.json"
+		self.prepareData()
 
 
 	### DATA HANDLING ###
+	def prepareData(self):
+		data = self.load_data()
+		for intent in data['intents']:
+			num = []
+			for text in data['intents'][intent]["text"]:
+				num.extend(text.split())
+			data['intents'][intent]['vocabSize'] = len(list(set(num)))
+
+		with open(self.qPath, 'w', encoding='utf8') as f:
+			json.dump(data, f, indent=4)
+
+
+
 	def load_queries(self, filepath, keyCol, patternCol, queriesCol=[], overwrite=True):
 
 		### If overwrite is true delete both files if either exist ###
@@ -45,15 +59,15 @@ class Bot:
 			sql = "DROP table IF EXISTS queryDetails;"
 			c.execute(sql)
 			connection.commit()
-		if(os.path.exists(self.qPath) and overwrite):
-			os.remove(qPath)
+		# if(os.path.exists(self.qPath) and overwrite):
+		# 	os.remove(self.qPath)
 
 		### All queries excel sheets must be in Queries folder ###
 		df = pd.read_excel("Queries/"+filepath).fillna(method='ffill', axis=0)
 		keyName = keyCol.replace(" ", "_")
 		wordsCol = patternCol.replace(" ", "_")
 
-		if (overwrite or (os.path.exists(self.dbPath)== False)):
+		if (overwrite or (os.path.exists(self.dbPath) == False)):
 			connection = sqlite3.connect(self.dbPath)
 			c = connection.cursor()
 			self.keyColumn = keyName
@@ -84,24 +98,28 @@ class Bot:
 				print("Error Occured: ", e)
 			c.close()
 
-		if (overwrite or (os.path.exists(self.qPath) == False)):
-			with open(self.defaultQPath,"r", encoding='utf8') as f:
-				data = json.load(f)
+		if (overwrite):
+			if(os.path.exists(self.qPath) and overwrite):
+				os.remove(self.qPath)
+			self.prepareData()
 
-				data["Queries"]["QueryNames"] = {}
-				data["Queries"]["QueryTypes"] = {}
+		with open(self.qPath,"r", encoding='utf8') as f:
+			data = json.load(f)
 
-				for row in zip(df[keyCol], df[patternCol]):
-					data["Queries"]["QueryNames"][row[0]] = [s.strip() for s in list(row[1].split(","))]
+			data["Queries"]["QueryNames"] = {}
+			data["Queries"]["QueryTypes"] = {}
 
-			### If there is an error the actual file won't  be created and the error can be identified ###
-			tempfile = os.path.join(os.path.dirname(self.defaultQPath), str(uuid.uuid4()))
-			
-			with open(tempfile, 'w', encoding='utf8') as f:
-				json.dump(data, f, indent=4)
-			
-			os.rename(tempfile, self.qPath)
-			print("QUERIES ADDED TO JSON FILE")
+			for row in zip(df[keyCol], df[patternCol]):
+				data["Queries"]["QueryNames"][row[0]] = [s.strip() for s in list(row[1].split(","))]
+
+		# ### If there is an error the actual file won't  be created and the error can be identified ###
+		# tempfile = os.path.join(os.path.dirname(self.defaultQPath), str(uuid.uuid4()))
+		
+		with open(self.qPath, 'w', encoding='utf8') as f:
+			json.dump(data, f, indent=4)
+		
+		# os.rename(tempfile, self.qPath)
+		print("QUERIES ADDED TO JSON FILE")
 		
 	def load_querytypes(self, dict_words):
 		data = self.load_data()
@@ -119,7 +137,6 @@ class Bot:
 			filename = self.qPath
 		else:
 			filename = self.defaultQPath
-
 
 		with open(filename, 'r', encoding='utf8') as file:
 			data = json.load(file)
@@ -239,7 +256,10 @@ class Bot:
 						temp[intent] = 1
 					else:
 						temp[intent] +=1
+			if intent in temp:
+				temp[intent] = temp[intent]/data[intent]['vocabSize']
 		most = 0
+		#print(temp)
 		for key in temp:
 			if temp[key] > most:
 				intent_found[0] = key
@@ -332,7 +352,7 @@ class Bot:
 	def Response(self, intent):
 		data = self.load_data()
 		data = data['intents']
-		output = Fore.GREEN + self.name + Style.RESET_ALL + ": "  + np.random.choice(data[intent]["responses"])
+		output = np.random.choice(data[intent]["responses"])
 		output = output.replace("<BOT>", self.name)
 		# output = output.replace("<COURSE>", Bot.course)
 		output = output.replace("<QUERY>", Bot.Query)
@@ -343,7 +363,7 @@ class Bot:
 		return self.Response("Intro")
 
 	def ResponseStr(self, string):
-		outputstr = Fore.GREEN + self.name + Style.RESET_ALL + ": "  + string
+		outputstr = string
 		outputstr = outputstr.replace("<BOT>", self.name)
 		return outputstr
 
@@ -422,82 +442,7 @@ class Bot:
 		return corrections
 
 
-if __name__ == "__main__":
-
-	# Define Conversation Flow
-	def ConversationFlow(Bot ,inputstr, intents, found, keyCol=""):
-		if(Bot.Query in found and os.path.exists(Bot.qPath)):
-			Qfound = Bot.checkQuery(inputstr)
-			# Qfound = [[], []]
-			if Qfound[0][0] == "":
-				yield Bot.ResponseStr("May I know the full name of your Course?\n") + Fore.BLUE + "User: " + Style.RESET_ALL
-				inputstr = str(input())
-				Qfound = Bot.checkQuery(inputstr, checkType=False)
-			else:
-				yield Bot.ResponseStr("Wait, I am looking for the information for you\n")
-			
-			if Qfound[0][0] != "":
-				if len(Qfound[1]) < 1:
-					Qfound[1].append("all")
-
-				info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
-				if "all" in Qfound[1]: 
-					for key in info:
-						if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and key != "Full_Name"):
-							yield Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n")
-				else:
-					for query in Qfound[1]:
-						if(info[query] != "Empty"):
-							yield Bot.ResponseStr( query + " of " + Qfound[0][0] +" is \n" + info[query] + "\n")
-			else:
-				yield Bot.ResponseStr("Information regarding the course cant be found please try again.\n")
-		elif(Bot.Contact in found):
-			yield Bot.ResponseStr("Would you like to share email?\n") + Fore.BLUE + "User: " + Style.RESET_ALL
-			ip = str(input())
-			email = ""
-			mobile = ""
-
-			if(Bot.Confirm(ip)):
-				yield Bot.ResponseStr("Please enter your email...\n") + Fore.BLUE + "User: " + Style.RESET_ALL
-				email = str(input())
-				email = Bot.getEmail(email)
-
-			yield Bot.ResponseStr("Would you like to share mobile number?\n") + Fore.BLUE + "User: " + Style.RESET_ALL
-			ip = str(input())
-
-			if(Bot.Confirm(ip)):
-				print(Bot.ResponseStr("Please enter your phone number (without spaces)...\n")) + Fore.BLUE + "User: " + Style.RESET_ALL
-				mobile = str(input())
-				mobile = Bot.getNumber(mobile)
-			Bot.saveContacts(email,mobile)
-
-		# elif(Bot.Location in found):
-		# 		address = Bot.getLoc("Manipal University Jaipur")
-		# 		yield Bot.ResponseStr("MUJ address is \n"+ address)
-		elif(Bot.OutOfScope in found):
-			yield Bot.Response("OutOfScope") + "\n"
-
-			###SELF LEARNING DATA COLLECTION CODE REMOVE COMMENTS TO RUN WITH OUT SELF LEARNING
-
-			# yield Bot.ResponseStr("Would you like to contribute by providing a possible response to your previous query?") + "\n" + Fore.BLUE + "User: " + Style.RESET_ALL
-			# ip = str(input())
-
-			# if Bot.Confirm(ip, default=False):
-			# 	Bot.selfLearnCollect(inputstr,ip)
-			# 	yield Bot.ResponseStr("Thank you for putting effort in making me better!\n")
-			# else:
-			# 	yield Bot.ResponseStr("Okay, continuing to solve your queries\n")
-
-		elif(Bot.Time in found):
-			yield Bot.ResponseStr("Current time is " + str(Bot.timeFetch())) + "\n"
-
-		else:
-			yield Chatbot.Response(found[0]) + "\n"
-
-		yield intents
-
-
-
+def start():
 	#Create a Chatbot Instance
 	Chatbot = Bot("Botto")
 
@@ -514,6 +459,7 @@ if __name__ == "__main__":
 		uniqueWordCol = "Full Name"
 		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
 		Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
+		Chatbot.keyCol=keyCol
 
 		#Enter similar words for query types (Optional)
 
@@ -526,7 +472,7 @@ if __name__ == "__main__":
 
 
 		### COMMENT THIS LINE BELOW AFTER CREATING IT FIRST TO IMPROVE THE LOAD TIMES
-		Chatbot.load_querytypes(dict_words) 
+		#Chatbot.load_querytypes(dict_words) 
 
 		# new_intents = { "Location":{"text":["location","where","address","place"],"responses":["Location of <LOC> is ","<LOC> is at","Address of <LOC> is at"]}}
 		
@@ -539,8 +485,8 @@ if __name__ == "__main__":
 
 		colorama.init()
 
-		print(Chatbot.botGreeting())
-		while(True):
+		return Chatbot,intents,Chatbot.botGreeting(),[USE_PATTERN]
+		'''while(True):
 			print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
 			inputstr = str(input())
 			corrections = Chatbot.spellCheck(inputstr)
@@ -566,7 +512,7 @@ if __name__ == "__main__":
 				
 
 			if "GoodBye" in found:
-				break
+				break'''
 	else:
 
 
@@ -578,6 +524,7 @@ if __name__ == "__main__":
 		uniqueWordCol = "Full Name"
 		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
 		Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
+		Chatbot.keyCol=keyCol
 
 		#Enter similar words for query types (Optional)
 
@@ -620,9 +567,9 @@ if __name__ == "__main__":
 		newmodel = ANN.ANNClassifier.load_model(modelName=modelFile)
 
 		colorama.init()
-		print(Chatbot.botGreeting())
+		return Chatbot,intents,Chatbot.botGreeting(),[USE_PATTERN,newmodel,data]
 
-		while(True):
+		'''while(True):
 			print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
 			inputstr = str(input())
 			corrections = Chatbot.spellCheck(inputstr)
@@ -647,5 +594,220 @@ if __name__ == "__main__":
 					print(intents, end="")
 				
 			if "GoodBye" in found:
-				break
+				break'''
+
+def ConversationFlow_1(Bot ,inputstr, intents, found, keyCol="",state={}):
+	msg=[]
+	Qfound = Bot.checkQuery(inputstr, checkType=False)
+	if Qfound[0][0] != "":
+		if len(Qfound[1]) < 1:
+			Qfound[1].append("all")
+		info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
+		if "all" in Qfound[1]: 
+			for key in info:
+				if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and key != "Full_Name"):
+					msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
+		else:
+			for query in Qfound[1]:
+				if(info[query] != "Empty"):
+					msg.append( Bot.ResponseStr( query + " of " + Qfound[0][0] +" is \n" + info[query] + "\n"))
+	else:
+		msg.append( Bot.ResponseStr("Information regarding the course cant be found please try again.\n"))
+	state['state']=0
+	return msg,intents,state
+
+
+def ConversationFlow_21(Bot ,inputstr, intents, found, keyCol="",state={}):
+	msg=[]
+	state['email'] = ""
+	state['mobile'] = ""
+	
+	print(Bot.Confirm(inputstr))
+	if(Bot.Confirm(inputstr)):
+		msg.append( Bot.ResponseStr("Please enter your email...\n") )
+		state['state']=22
+		return msg,intents,state
+	msg.append( Bot.ResponseStr("Would you like to share mobile number?\n") )
+	state['state']=23
+	return msg,intents,state
+
+def ConversationFlow_22(Bot ,inputstr, intents, found, keyCol="",state={}):
+	msg=[]
+	state['email'] = Bot.getEmail(inputstr)
+	msg.append( Bot.ResponseStr("Would you like to share mobile number?\n") )
+	state['state']=23
+	return msg,intents,state
+
+
+def ConversationFlow_23(Bot ,inputstr, intents, found, keyCol="",state={}):
+	msg=[]
+	print(Bot.Confirm(inputstr))
+	if(Bot.Confirm(inputstr)):
+		msg.append(Bot.ResponseStr("Please enter your phone number (without spaces)...\n")) 
+		state['state']=24
+		return msg,intents,state
+	if state['email']=='':
+		state['state']=0 
+		msg.append('How can I help you?')
+		return msg,intents,state 
+	state['state']=0
+	msg.append(Bot.saveContacts(state['email'],state['mobile']))
+	return msg,intents,state
+
+def ConversationFlow_24(Bot ,inputstr, intents, found, keyCol="",state={}):
+	msg=[]
+	state['mobile'] = Bot.getNumber(inputstr)
+	msg.append(Bot.saveContacts(state['email'],state['mobile']))
+	state['state']=0
+	return msg,intents,state
+
+# Define Conversation Flow
+def ConversationFlow(Bot ,inputstr, intents, found, keyCol="",state={}):
+	if state['state']==1:
+		return ConversationFlow_1(Bot ,inputstr, intents, found, keyCol,state)
+	if state['state']==21:
+		return ConversationFlow_21(Bot ,inputstr, intents, found, keyCol,state)
+	if state['state']==22:
+		return ConversationFlow_22(Bot ,inputstr, intents, found, keyCol,state)
+	if state['state']==23:
+		return ConversationFlow_23(Bot ,inputstr, intents, found, keyCol,state)
+	if state['state']==24:
+		return ConversationFlow_24(Bot ,inputstr, intents, found, keyCol,state)
+	msg=[]
+	if(Bot.Query in found and os.path.exists(Bot.qPath)):
+		Qfound = Bot.checkQuery(inputstr)
+		# Qfound = [[], []]
+		if Qfound[0][0] == "":
+			msg.append( Bot.ResponseStr("May I know the full name of your Course?\n") )
+			state['state']=1
+			return msg,intents,state
+			#Qfound = Bot.checkQuery(inputstr, checkType=False)
+		else:
+			msg.append( Bot.ResponseStr("Wait, I am looking for the information for you\n"))
+		
+		if Qfound[0][0] != "":
+			if len(Qfound[1]) < 1:
+				Qfound[1].append("all")
+			info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
+			if "all" in Qfound[1]: 
+				for key in info:
+					if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and key != "Full_Name"):
+						msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
+			else:
+				for query in Qfound[1]:
+					if(info[query] != "Empty"):
+						msg.append( Bot.ResponseStr( query + " of " + Qfound[0][0] +" is \n" + info[query] + "\n"))
+		else:
+			msg.append( Bot.ResponseStr("Information regarding the course cant be found please try again.\n"))
+	elif(Bot.Contact in found):
+		msg.append( Bot.ResponseStr("Would you like to share email?\n") )
+		state['state']=21
+		return msg,intents,state
+	# elif(Bot.Location in found):
+	# 		address = Bot.getLoc("Manipal University Jaipur")
+	# 		msg.append( Bot.ResponseStr("MUJ address is \n"+ address))
+	elif(Bot.OutOfScope in found):
+		msg.append( Bot.Response("OutOfScope") + "\n")
+		###SELF LEARNING DATA COLLECTION CODE REMOVE COMMENTS TO RUN WITH OUT SELF LEARNING
+		# msg.append( Bot.ResponseStr("Would you like to contribute by providing a possible response to your previous query?") + "\n" + Fore.BLUE + "User: " + Style.RESET_ALL)
+		# ip = str(input())
+		# if Bot.Confirm(ip, default=False):
+		# 	Bot.selfLearnCollect(inputstr,ip)
+		# 	msg.append( Bot.ResponseStr("Thank you for putting effort in making me better!\n"))
+		# else:
+		# 	msg.append( Bot.ResponseStr("Okay, continuing to solve your queries\n"))
+	elif(Bot.Time in found):
+		msg.append( Bot.ResponseStr("Current time is " + str(Bot.timeFetch())) + "\n")
+	else:
+		msg.append( Bot.Response(found[0]) + "\n")
+	return  msg,intents,state
+
+def findresponse_corrections(Chatbot,intents,user_msg,state,type):
+	state['state']=0
+	if type[0]:
+		f=True
+		msg=[]
+		inputstr=state['inputstr']
+		inputstr2=state['inputstr2']
+		if Chatbot.Confirm(user_msg, default=False):
+			inputstr = inputstr2
+		# else:
+		# 	print(Chatbot.ResponseStr("Please try again"))
+		# 	continue
+		found = Chatbot.checkIntents(intents= intents, input=inputstr)
+		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
+			
+		if "GoodBye" in found:
+			f=False
+		return Chatbot,intents,f,msg,state
+	else:
+		f=True
+		msg=[]
+		inputstr=state['inputstr']
+		inputstr2=state['inputstr2']
+		if Chatbot.Confirm(user_msg, default=False):
+			inputstr = inputstr2
+		# else:
+		# 	print(Chatbot.ResponseStr("Please try again"))
+		# 	continue
+		found = ANN.ANNClassifier.prediction(inputstr, intents, model = type[1], labels=type[2])
+		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
+			
+		if "GoodBye" in found:
+			f=False 
+		return Chatbot,intents,f,msg,state
+
+
+
+
+def findresponse(Chatbot,intents,user_msg,state,chatbot_type):
+	if state['state']=="corrections":
+		return findresponse_corrections(Chatbot,intents,user_msg,state,chatbot_type)
+	if chatbot_type[0]:
+		f=True
+		msg=[]
+		inputstr = user_msg
+		'''corrections = Chatbot.spellCheck(inputstr)
+		if corrections != []:
+			for correction in corrections:
+				inputstr2 = inputstr.replace(correction[1], correction[0])
+			msg.append(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+			state['state']='corrections'
+			state['inputstr']=inputstr
+			state['inputstr2']=inputstr2
+			return Chatbot,intents,f,msg,state
+			#if Chatbot.Confirm(ip, default=False):
+			#	inputstr = inputstr2
+			# else:
+			# 	print(Chatbot.ResponseStr("Please try again"))
+			# 	continue'''
+		found = Chatbot.checkIntents(intents= intents, input=inputstr)
+		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
+			
+		if "GoodBye" in found:
+			f=False
+		return Chatbot,intents,f,msg,state
+	else:
+		f=True
+		msg=[]
+		inputstr = user_msg
+		corrections = Chatbot.spellCheck(inputstr)
+		if corrections != []:
+			for correction in corrections:
+				inputstr2 = inputstr.replace(correction[1], correction[0])
+			msg.append(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+			state['state']="corrections"
+			state['inputstr']=inputstr
+			state['inputstr2']=inputstr2
+			return Chatbot,intents,f,msg,state
+			#if Chatbot.Confirm(ip, default=False):
+			#	inputstr = inputstr2
+			# else:
+			# 	print(Chatbot.ResponseStr("Please try again"))
+			# 	continue
+		found = ANN.ANNClassifier.prediction(inputstr, intents, model = chatbot_type[1], labels=chatbot_type[2])
+		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
+		if "GoodBye" in found:
+			f=False 
+		return Chatbot,intents,f,msg,state
 

@@ -389,8 +389,9 @@
         },
         "Query": {
             "text": [
-                "Course",
-                "My Course",
+                "Can you tell me more about",
+                "Do you have more information on",
+                "What can you tell me about?",
                 "details",
                 "help",
                 "query",

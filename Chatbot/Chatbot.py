@@ -23,7 +23,7 @@ class Bot:
 	OutOfScope = "OutOfScope"
 	Time = "TimeQuery"
 	Location = "Location"
-	init_intents = ["Query", "Greeting", "BotEnquiry", "Contact", "TimeQuery", "NameQuery", "Swearing", "Thanks", "GoodBye", "CourtesyGoodBye", "Jokes", "SelfAware"]
+	init_intents = ["Query", "Greeting", "BotEnquiry", "Contact", "NameQuery", "Swearing", "Thanks", "GoodBye", "CourtesyGoodBye", "Jokes", "SelfAware"]
 	
 	def __init__(self, name):
 		self.name = name
@@ -35,9 +35,23 @@ class Bot:
 		self.qPath = "Data/intent_queries_"+name+".json"
 		self.variables = {}
 		self.defaultQPath = "Data/intent_words.json"
+		self.prepareData()
 
 
 	### DATA HANDLING ###
+	def prepareData(self):
+		data = self.load_data()
+		for intent in data['intents']:
+			num = []
+			for text in data['intents'][intent]["text"]:
+				num.extend(text.split())
+			data['intents'][intent]['vocabSize'] = len(list(set(num)))
+
+		with open(self.qPath, 'w', encoding='utf8') as f:
+			json.dump(data, f, indent=4)
+
+
+
 	def load_queries(self, filepath, keyCol, patternCol, queriesCol=[], overwrite=True):
 
 		### If overwrite is true delete both files if either exist ###
@@ -45,15 +59,15 @@ class Bot:
 			sql = "DROP table IF EXISTS queryDetails;"
 			c.execute(sql)
 			connection.commit()
-		if(os.path.exists(self.qPath) and overwrite):
-			os.remove(qPath)
+		# if(os.path.exists(self.qPath) and overwrite):
+		# 	os.remove(self.qPath)
 
 		### All queries excel sheets must be in Queries folder ###
 		df = pd.read_excel("Queries/"+filepath).fillna(method='ffill', axis=0)
 		keyName = keyCol.replace(" ", "_")
 		wordsCol = patternCol.replace(" ", "_")
 
-		if (overwrite or (os.path.exists(self.dbPath)== False)):
+		if (overwrite or (os.path.exists(self.dbPath) == False)):
 			connection = sqlite3.connect(self.dbPath)
 			c = connection.cursor()
 			self.keyColumn = keyName
@@ -84,24 +98,28 @@ class Bot:
 				print("Error Occured: ", e)
 			c.close()
 
-		if (overwrite or (os.path.exists(self.qPath) == False)):
-			with open(self.defaultQPath,"r", encoding='utf8') as f:
-				data = json.load(f)
+		if (overwrite):
+			if(os.path.exists(self.qPath) and overwrite):
+				os.remove(self.qPath)
+			self.prepareData()
 
-				data["Queries"]["QueryNames"] = {}
-				data["Queries"]["QueryTypes"] = {}
+		with open(self.qPath,"r", encoding='utf8') as f:
+			data = json.load(f)
 
-				for row in zip(df[keyCol], df[patternCol]):
-					data["Queries"]["QueryNames"][row[0]] = [s.strip() for s in list(row[1].split(","))]
+			data["Queries"]["QueryNames"] = {}
+			data["Queries"]["QueryTypes"] = {}
 
-			### If there is an error the actual file won't  be created and the error can be identified ###
-			tempfile = os.path.join(os.path.dirname(self.defaultQPath), str(uuid.uuid4()))
-			
-			with open(tempfile, 'w', encoding='utf8') as f:
-				json.dump(data, f, indent=4)
-			
-			os.rename(tempfile, self.qPath)
-			print("QUERIES ADDED TO JSON FILE")
+			for row in zip(df[keyCol], df[patternCol]):
+				data["Queries"]["QueryNames"][row[0]] = [s.strip() for s in list(row[1].split(","))]
+
+		# ### If there is an error the actual file won't  be created and the error can be identified ###
+		# tempfile = os.path.join(os.path.dirname(self.defaultQPath), str(uuid.uuid4()))
+		
+		with open(self.qPath, 'w', encoding='utf8') as f:
+			json.dump(data, f, indent=4)
+		
+		# os.rename(tempfile, self.qPath)
+		print("QUERIES ADDED TO JSON FILE")
 		
 	def load_querytypes(self, dict_words):
 		data = self.load_data()
@@ -119,7 +137,6 @@ class Bot:
 			filename = self.qPath
 		else:
 			filename = self.defaultQPath
-
 
 		with open(filename, 'r', encoding='utf8') as file:
 			data = json.load(file)
@@ -239,7 +256,10 @@ class Bot:
 						temp[intent] = 1
 					else:
 						temp[intent] +=1
+			if intent in temp:
+				temp[intent] = temp[intent]/data[intent]['vocabSize']
 		most = 0
+		print(temp)
 		for key in temp:
 			if temp[key] > most:
 				intent_found[0] = key
@@ -488,8 +508,8 @@ if __name__ == "__main__":
 			# else:
 			# 	yield Bot.ResponseStr("Okay, continuing to solve your queries\n")
 
-		elif(Bot.Time in found):
-			yield Bot.ResponseStr("Current time is " + str(Bot.timeFetch())) + "\n"
+		# elif(Bot.Time in found):
+		# 	yield Bot.ResponseStr("Current time is " + str(Bot.timeFetch())) + "\n"
 
 		else:
 			yield Chatbot.Response(found[0]) + "\n"
@@ -502,7 +522,7 @@ if __name__ == "__main__":
 	Chatbot = Bot("Botto")
 
 
-	USE_PATTERN = False
+	USE_PATTERN = True
 
 	if USE_PATTERN:
 
@@ -543,20 +563,20 @@ if __name__ == "__main__":
 		while(True):
 			print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
 			inputstr = str(input())
-			corrections = Chatbot.spellCheck(inputstr)
-			if corrections != []:
-				for correction in corrections:
-					inputstr2 = inputstr.replace(correction[1], correction[0])
-				print(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+			# corrections = Chatbot.spellCheck(inputstr)
+			# if corrections != []:
+			# 	for correction in corrections:
+			# 		inputstr2 = inputstr.replace(correction[1], correction[0])
+			# 	print(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
 
-				print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
-				ip = str(input())
+			# 	print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
+			# 	ip = str(input())
 
-				if Chatbot.Confirm(ip, default=False):
-					inputstr = inputstr2
-				# else:
-				# 	print(Chatbot.ResponseStr("Please try again"))
-				# 	continue
+			# 	if Chatbot.Confirm(ip, default=False):
+			# 		inputstr = inputstr2
+			# 	else:
+			# 		print(Chatbot.ResponseStr("Please try again"))
+			# 		continue
 
 
 			found = Chatbot.checkIntents(intents= intents, input=inputstr)

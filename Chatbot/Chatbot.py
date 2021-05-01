@@ -260,6 +260,7 @@ class Bot:
 				temp[intent] = temp[intent]/data[intent]['vocabSize']
 		most = 0
 		#print(temp)
+		print(temp)
 		for key in temp:
 			if temp[key] > most:
 				intent_found[0] = key
@@ -447,7 +448,7 @@ def start():
 	Chatbot = Bot("Botto")
 
 
-	USE_PATTERN = False
+	USE_PATTERN = True
 
 	if USE_PATTERN:
 
@@ -489,20 +490,20 @@ def start():
 		'''while(True):
 			print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
 			inputstr = str(input())
-			corrections = Chatbot.spellCheck(inputstr)
-			if corrections != []:
-				for correction in corrections:
-					inputstr2 = inputstr.replace(correction[1], correction[0])
-				print(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+			# corrections = Chatbot.spellCheck(inputstr)
+			# if corrections != []:
+			# 	for correction in corrections:
+			# 		inputstr2 = inputstr.replace(correction[1], correction[0])
+			# 	print(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
 
-				print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
-				ip = str(input())
+			# 	print(Fore.BLUE + "User: " + Style.RESET_ALL, end= "")
+			# 	ip = str(input())
 
-				if Chatbot.Confirm(ip, default=False):
-					inputstr = inputstr2
-				# else:
-				# 	print(Chatbot.ResponseStr("Please try again"))
-				# 	continue
+			# 	if Chatbot.Confirm(ip, default=False):
+			# 		inputstr = inputstr2
+			# 	else:
+			# 		print(Chatbot.ResponseStr("Please try again"))
+			# 		continue
 
 
 			found = Chatbot.checkIntents(intents= intents, input=inputstr)

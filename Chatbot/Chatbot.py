@@ -613,7 +613,7 @@ def ConversationFlow_1(Bot ,inputstr, intents, found, keyCol="",state={}):
 		info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
 		if "all" in Qfound[1]: 
 			for key in info:
-				if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and (key != "Full_Name" or key != keyCol)):
+				if(info[key] != "Empty" and key != str(Bot.findKey()) and key != "Full_Name"):
 					msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
 		else:
 			for query in Qfound[1]:

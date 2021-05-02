@@ -27,6 +27,7 @@
                 "Whats up",
                 "Good Evening",
                 "Good morning",
+                "Good Afternoom"
                 "I hope you are well!"
             ],
             "responses": [
@@ -174,7 +175,9 @@
                 "Good day",
                 "Have a great day!",
                 "Great day to you sir!",
-                "Have a wonderful day!"
+                "Have a wonderful day!",
+                "Good night",
+                "Goodnight"
             ],
             "responses": [
                 "Goodbye, Take care",

@@ -92,34 +92,6 @@
             },
             "vocabSize": 18
         },
-        "TimeQuery": {
-            "text": [
-                "Time now",
-                "Time currently",
-                "What is the time?",
-                "Do you know what time it is?",
-                "Do you know the time?",
-                "Can you tell me the time?",
-                "Tell me what time it is?",
-                "Time",
-                "Can I know the current time?"
-            ],
-            "responses": [
-                "One moment, fetching timezone...",
-                "One moment, checking my  watch",
-                "One moment, let me fetch it for you",
-                "One sec, fetching timezone...",
-                "One sec, checking my  watch",
-                "One sec, let me fetch it for you",
-                "One second, fetching timezone...",
-                "One second, checking my  watch",
-                "One second, let me fetch it for you"
-            ],
-            "extension": {
-                "function": "fetchTime"
-            },
-            "vocabSize": 20
-        },
         "Thanks": {
             "text": [
                 "thank you",
@@ -143,7 +115,7 @@
         },
         "UnderstandQuery": {
             "text": [
-                " understand ",
+                "understand",
                 "Do you understand me",
                 "Do you know what I am saying",
                 "you get me",
@@ -174,7 +146,11 @@
                 "fucker",
                 "shit",
                 "crap",
-                "fucking"
+                "fucking",
+                "dumbass",
+                "motherfucker",
+                "piece of shit",
+                "son of a bitch"
             ],
             "responses": [
                 "Please do not swear",
@@ -184,7 +160,7 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 8
+            "vocabSize": 14
         },
         "GoodBye": {
             "text": [
@@ -208,28 +184,15 @@
             },
             "vocabSize": 20
         },
-        "CourtesyGoodBye": {
-            "text": [
-                "bye",
-                "goodbye",
-                "good bye"
-            ],
-            "responses": [
-                "No problem, goodbye",
-                "Not a problem! Have a nice day",
-                "Bye! Come back again soon."
-            ],
-            "extension": {
-                "function": ""
-            },
-            "vocabSize": 3
-        },
         "Jokes": {
             "text": [
                 "Joke",
                 "funny",
                 "laugh",
-                "cheering up"
+                "cheering up",
+                "hilarious",
+                "comedy",
+                "puns"
             ],
             "responses": [
                 "I met a Dutch girl with inflatable shoes last week, phoned her up to arrange a date but unfortunately she'd popped her clogs.  ",
@@ -379,14 +342,15 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 5
+            "vocabSize": 8
         },
         "SelfAware": {
             "text": [
                 "self-aware",
                 "aware",
                 "alive",
-                "conscious"
+                "conscious",
+                "are you real?"
             ],
             "responses": [
                 "That is an interesting question, can you prove that you are?",
@@ -397,12 +361,13 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 4
+            "vocabSize": 7
         },
         "Query": {
             "text": [
-                "Course",
-                "My Course",
+                "Can you tell me more about",
+                "Do you have more information on",
+                "What can you tell me about?",
                 "details",
                 "help",
                 "query",
@@ -416,19 +381,27 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 9
+            "vocabSize": 18
         },
         "Contact": {
             "text": [
                 "contact",
-                "communicate with university",
+                "speak to",
+                "approach",
+                "talk to admin",
+                "talk",
+                "call",
+                "communication",
+                "get in touch",
+                "ring up",
+                "phone",
                 "communicate"
             ],
             "responses": [],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 4
+            "vocabSize": 15
         },
         "Agree": {
             "text": [
@@ -436,26 +409,34 @@
                 "Yes",
                 "Indeed",
                 "Positive",
-                "Sure"
+                "Sure",
+                "True",
+                "Correct",
+                "Yup"
             ],
             "responses": [],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 5
+            "vocabSize": 8
         },
         "Disagree": {
             "text": [
                 "Disagree",
                 "No",
                 "Nope",
-                "Negative"
+                "Negative",
+                "False",
+                "Incorrect",
+                "Nah",
+                "Not Sure",
+                "Wrong"
             ],
             "responses": [],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 4
+            "vocabSize": 10
         },
         "OutOfScope": {
             "text": [],
@@ -471,47 +452,6 @@
                 "function": ""
             },
             "vocabSize": 0
-        },
-        "Location": {
-            "text": [
-                "Where is MUJ?",
-                " How do I find Manipal University Jaipur?",
-                " How do I locate this college?",
-                " Where is this University?",
-                " What is the address of this university?",
-                " What is the address of MUJ?"
-            ],
-            "responses": [
-                "Manipal University Jaipur, Dehmi Kalan, Off Jaipur-Ajmer Expressway, Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 More details can be found on: https://jaipur.manipal.edu/muj/contact-us.html"
-            ],
-            "vocabSize": 19
-        },
-        "Owner": {
-            "text": [
-                "Who is the President of this College?",
-                " Who is the head of this University?",
-                " What is the name of the President of Manipal University Jaipur?",
-                " Who is the Dead of this College?",
-                " Does this college have a head?"
-            ],
-            "responses": [
-                "The more details about board of management can be found at https://jaipur.manipal.edu/muj/about-us/board-of-management.html"
-            ],
-            "vocabSize": 20
-        },
-        "Timings": {
-            "text": [
-                "What is the timing of the College?",
-                " What time the college is open?",
-                " May I know the time I can contact Manipal University Jaipur?",
-                " How long the college will stay open?",
-                " What are the timings of MUJ?",
-                " At what time is the college open?",
-                " What is the time I can contact the University?"
-            ],
-            "responses": [
-                "The College timings are 9:00 to 18:00 in Indian Standard Time (IST)"
-            ]
         }
     },
     "Queries": {
@@ -975,7 +915,8 @@
             "Course": [
                 "May I know your course?",
                 "I need to know your Course first",
-                "Can you tell me your course?"
+                "Can you tell me your course?offered courses",
+                "education options"
             ],
             "Eligibility": [
                 "Eligibility",

@@ -13,8 +13,8 @@ from nltk.corpus import stopwords
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 import string
-from textblob import TextBlob
-
+# from textblob import TextBlob
+from spellchecker import SpellChecker
 
 
 class Bot:
@@ -23,7 +23,7 @@ class Bot:
 	OutOfScope = "OutOfScope"
 	Time = "TimeQuery"
 	Location = "Location"
-	init_intents = ["Query", "Greeting", "BotEnquiry", "Contact", "NameQuery", "Swearing", "Thanks", "GoodBye", "CourtesyGoodBye", "Jokes", "SelfAware"]
+	init_intents = ["Query", "Greeting", "BotEnquiry", "Contact", "NameQuery", "Swearing", "Thanks", "GoodBye", "Jokes", "SelfAware"]
 	
 	def __init__(self, name):
 		self.name = name
@@ -434,13 +434,20 @@ class Bot:
 	# 	return location.address
 	def spellCheck(self, inputstr):
 		corrections = []
-		words = inputstr.split()
-		for word in words:
-			correct = TextBlob(word.lower())
-			if(str(correct.correct()).lower() != word.lower()):
-				corrections.append((str(correct.correct()),word))
+		# words = inputstr.split()
+		# for word in words:
+		# 	correct = TextBlob(word.lower())
+		# 	if(str(correct.correct()).lower() != word.lower()):
+		# 		corrections.append((str(correct.correct()),word))
+
+		spell = SpellChecker()
+		mispelled = spell.unknown(inputstr.split())
+
+		for word in mispelled:
+			corrections.append((spell.correction(word), word))
 
 		return corrections
+
 
 
 def start():
@@ -473,7 +480,7 @@ def start():
 
 
 		### COMMENT THIS LINE BELOW AFTER CREATING IT FIRST TO IMPROVE THE LOAD TIMES
-		#Chatbot.load_querytypes(dict_words) 
+		Chatbot.load_querytypes(dict_words) 
 
 		# new_intents = { "Location":{"text":["location","where","address","place"],"responses":["Location of <LOC> is ","<LOC> is at","Address of <LOC> is at"]}}
 		
@@ -606,7 +613,7 @@ def ConversationFlow_1(Bot ,inputstr, intents, found, keyCol="",state={}):
 		info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
 		if "all" in Qfound[1]: 
 			for key in info:
-				if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and key != "Full_Name"):
+				if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and (key != "Full_Name" or key != keyCol)):
 					msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
 		else:
 			for query in Qfound[1]:
@@ -692,7 +699,7 @@ def ConversationFlow(Bot ,inputstr, intents, found, keyCol="",state={}):
 			info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
 			if "all" in Qfound[1]: 
 				for key in info:
-					if(info[key] != "Empty" and info[key] != str(Bot.findKey()) and key != "Full_Name"):
+					if(info[key] != "Empty" and key != str(Bot.findKey()) and key != "Full_Name"):
 						msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
 			else:
 				for query in Qfound[1]:
@@ -792,20 +799,20 @@ def findresponse(Chatbot,intents,user_msg,state,chatbot_type):
 		f=True
 		msg=[]
 		inputstr = user_msg
-		corrections = Chatbot.spellCheck(inputstr)
-		if corrections != []:
-			for correction in corrections:
-				inputstr2 = inputstr.replace(correction[1], correction[0])
-			msg.append(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
-			state['state']="corrections"
-			state['inputstr']=inputstr
-			state['inputstr2']=inputstr2
-			return Chatbot,intents,f,msg,state
-			#if Chatbot.Confirm(ip, default=False):
-			#	inputstr = inputstr2
-			# else:
-			# 	print(Chatbot.ResponseStr("Please try again"))
-			# 	continue
+		# corrections = Chatbot.spellCheck(inputstr)
+		# if corrections != []:
+		# 	for correction in corrections:
+		# 		inputstr2 = inputstr.replace(correction[1], correction[0])
+		# 	msg.append(Chatbot.ResponseStr("Did you mean "+ inputstr2 +"?"))
+		# 	state['state']="corrections"
+		# 	state['inputstr']=inputstr
+		# 	state['inputstr2']=inputstr2
+		# 	return Chatbot,intents,f,msg,state
+		# 	if Chatbot.Confirm(ip, default=False):
+		# 		inputstr = inputstr2
+		# 	else:
+		# 		print(Chatbot.ResponseStr("Please try again"))
+		# 		continue
 		found = ANN.ANNClassifier.prediction(inputstr, intents, model = chatbot_type[1], labels=chatbot_type[2])
 		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
 		if "GoodBye" in found:

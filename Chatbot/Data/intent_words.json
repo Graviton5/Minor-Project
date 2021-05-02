@@ -88,33 +88,6 @@
                 "function": ""
             }
         },
-        "TimeQuery": {
-            "text": [
-                "Time now",
-                "Time currently",
-                "What is the time?",
-                "Do you know what time it is?",
-                "Do you know the time?",
-                "Can you tell me the time?",
-                "Tell me what time it is?",
-                "Time",
-                "Can I know the current time?"
-            ],
-            "responses": [
-                "One moment, fetching timezone...",
-                "One moment, checking my  watch",
-                "One moment, let me fetch it for you",
-                "One sec, fetching timezone...",
-                "One sec, checking my  watch",
-                "One sec, let me fetch it for you",
-                "One second, fetching timezone...",
-                "One second, checking my  watch",
-                "One second, let me fetch it for you"
-            ],
-            "extension": {
-                "function": "fetchTime"
-            }
-        },
         "Thanks": {
             "text": [
                 "thank you",
@@ -137,7 +110,7 @@
         },
         "UnderstandQuery": {
             "text": [
-                " understand ",
+                "understand",
                 "Do you understand me",
                 "Do you know what I am saying",
                 "you get me",
@@ -167,7 +140,11 @@
                 "fucker",
                 "shit",
                 "crap",
-                "fucking"
+                "fucking",
+                "dumbass",
+                "motherfucker",
+                "piece of shit",
+                "son of a bitch"
             ],
             "responses": [
                 "Please do not swear",
@@ -199,27 +176,15 @@
                 "function": ""
             }
         },
-        "CourtesyGoodBye": {
-            "text": [
-                "bye",
-                "goodbye",
-                "good bye"
-            ],
-            "responses": [
-                "No problem, goodbye",
-                "Not a problem! Have a nice day",
-                "Bye! Come back again soon."
-            ],
-            "extension": {
-                "function": ""
-            }
-        },
         "Jokes": {
             "text": [
                 "Joke",
                 "funny",
                 "laugh",
-                "cheering up"
+                "cheering up",
+                "hilarious",
+                "comedy",
+                "puns"
             ],
             "responses": [
                 "I met a Dutch girl with inflatable shoes last week, phoned her up to arrange a date but unfortunately she'd popped her clogs.  ",
@@ -375,7 +340,8 @@
                 "self-aware",
                 "aware",
                 "alive",
-                "conscious"
+                "conscious",
+                "are you real?"
             ],
             "responses": [
                 "That is an interesting question, can you prove that you are?",
@@ -409,7 +375,15 @@
         "Contact": {
             "text": [
                 "contact",
-                "communicate with university",
+                "speak to",
+                "approach",
+                "talk to admin",
+                "talk",
+                "call",
+                "communication",
+                "get in touch",
+                "ring up",
+                "phone",
                 "communicate"
             ],
             "responses": [],
@@ -423,7 +397,10 @@
                 "Yes",
                 "Indeed",
                 "Positive",
-                "Sure"
+                "Sure",
+                "True",
+                "Correct",
+                "Yup"
             ],
             "responses": [],
             "extension": {
@@ -435,7 +412,12 @@
                 "Disagree",
                 "No",
                 "Nope",
-                "Negative"
+                "Negative",
+                "False",
+                "Incorrect",
+                "Nah",
+                "Not Sure",
+                "Wrong"
             ],
             "responses": [],
             "extension": {

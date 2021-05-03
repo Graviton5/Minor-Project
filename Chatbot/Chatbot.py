@@ -1,7 +1,7 @@
 import re
 import sqlite3
 import colorama 
-from colorama import Fore, Style, Back
+# from colorama import Fore, Style, Back
 import numpy as np
 import os, json, uuid
 from datetime import datetime
@@ -53,6 +53,8 @@ class Bot:
 
 
 	def load_queries(self, filepath, keyCol, patternCol, queriesCol=[], overwrite=True):
+		connection = sqlite3.connect(self.dbPath)
+		c = connection.cursor()
 
 		### If overwrite is true delete both files if either exist ###
 		if(os.path.exists(self.dbPath) and overwrite):
@@ -68,8 +70,6 @@ class Bot:
 		wordsCol = patternCol.replace(" ", "_")
 
 		if (overwrite or (os.path.exists(self.dbPath) == False)):
-			connection = sqlite3.connect(self.dbPath)
-			c = connection.cursor()
 			self.keyColumn = keyName
 			try:
 				### Create Database ###
@@ -455,7 +455,7 @@ def start():
 	Chatbot = Bot("Botto")
 
 
-	USE_PATTERN = True
+	USE_PATTERN = False
 
 	if USE_PATTERN:
 
@@ -491,7 +491,7 @@ def start():
 		intents.append(Bot.Contact)
 
 
-		colorama.init()
+		# colorama.init()
 
 		return Chatbot,intents,Chatbot.botGreeting(),[USE_PATTERN]
 		'''while(True):
@@ -531,7 +531,7 @@ def start():
 		keyCol = "Program Name"
 		uniqueWordCol = "Full Name"
 		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
-		Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
+		Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=True) ###Set overwrite = True for recreating a Dataset on each run
 		Chatbot.keyCol=keyCol
 
 		#Enter similar words for query types (Optional)
@@ -557,24 +557,30 @@ def start():
 
 		Chatbot.modify_intents_excel(filename="General Queries.xlsx" ,keyCol='Query', textCol='Questions', responseCol='Response', textSeparator=',', respSeparator = '\n')
 		
+		###Add the new intents to the intents list
+		df = pd.read_excel("Queries/General Queries.xlsx").fillna(method='ffill', axis=0)
+		keyCol_excel = df["Query"]
+		for i in keyCol_excel:
+			intents.append(i)
+
 		intents.append("Location")
 		intents.append("Owner")
 		intents.append("Timings")
 
 		### Train Neural Network
-		data = ANN.ANNClassifier.collectData(Chatbot.qPath)
-		data = data['intents']
+		# data = ANN.ANNClassifier.collectData(Chatbot.qPath)
+		# data = data['intents']
 
 		labelFile = "Labels_" + Chatbot.name
 		modelFile = "Chatbot_" + Chatbot.name
 
 		
-		ANN.ANNClassifier.create(data, labelFile=labelFile, modelName=modelFile)
+		# ANN.ANNClassifier.create(data, labelFile=labelFile, modelName=modelFile, epochs=250)
 		data = ANN.ANNClassifier.load_labels(labelFile=labelFile)
 		
 		newmodel = ANN.ANNClassifier.load_model(modelName=modelFile)
 
-		colorama.init()
+		# colorama.init()
 		return Chatbot,intents,Chatbot.botGreeting(),[USE_PATTERN,newmodel,data]
 
 		'''while(True):

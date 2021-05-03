@@ -98,7 +98,6 @@ class ANNClassifier:
 		return model
 
 	def prediction(ipstring, intents, model, labels, Threshold = 0.2):
-
 		words = labels['words']
 		classes = labels['classes']
 		
@@ -112,6 +111,8 @@ class ANNClassifier:
 			bag.append(1) if wrd in w else bag.append(0)
 
 		prediction = model.predict([bag])
+
+		print(np.max(prediction), classes[np.argmax(prediction)], Threshold, np.max(prediction) > Threshold)
 		if np.max(prediction) > Threshold and classes[np.argmax(prediction)] in intents:
 			return [classes[np.argmax(prediction)]]
 		else:

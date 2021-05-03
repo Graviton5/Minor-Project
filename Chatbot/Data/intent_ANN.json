@@ -27,7 +27,7 @@
                 "Whats up",
                 "Good Evening",
                 "Good morning",
-                "Good Afternoom"
+                "Good Afternoon",
                 "I hope you are well!"
             ],
             "responses": [
@@ -377,7 +377,10 @@
                 "Can I have some information",
                 "Can you give me some details",
                 "Can you answer my questions?",
-                "I have a few questions regarding your organization"
+                "I have a few questions regarding your organization",
+                "Do you know more about LLB?",
+                "What is the of?",
+                "What do you know about?"
             ],
             "responses": [
                 "Fetching <QUERY> details about <COURSE>..."

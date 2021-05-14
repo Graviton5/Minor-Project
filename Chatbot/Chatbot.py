@@ -11,11 +11,11 @@ import pandas as pd
 import ANNClassifier as ANN
 from nltk.corpus import stopwords
 import nltk
-from nltk.stem.lancaster import LancasterStemmer
+# from nltk.stem.lancaster import LancasterStemmer
 import string
 # from textblob import TextBlob
 from spellchecker import SpellChecker
-
+from nltk.stem import WordNetLemmatizer
 
 class Bot:
 	Query = "Query"
@@ -235,14 +235,16 @@ class Bot:
 
 		ignore_words = set(stopwords.words('english') + list(string.punctuation))
 		# ignore_words = list(string.punctuation)
-		stemmer = LancasterStemmer()    
+		# stemmer = LancasterStemmer()  
+
+		lemmatizer = WordNetLemmatizer()  
 
 		data = data['intents']
 		##Removing special characters
 		# input = re.sub(r'[^a-zA-Z0-9 \n\.]', ' ', input).lower()
 		inputwd = nltk.word_tokenize(input)
 		print("checkIntents",input,inputwd)
-		inputwd = [stemmer.stem(w.lower()) for w in inputwd if w not in ignore_words]
+		inputwd = [lemmatizer.lemmatize(w.lower()) for w in inputwd if w not in ignore_words]
 		print("checkIntents2",input,inputwd)
 		inputwd = list(set(inputwd))
 
@@ -277,7 +279,9 @@ class Bot:
 		similar_words = []
 		ignore_words = set(stopwords.words('english') + list(string.punctuation))
 		# ignore_words = list(string.punctuation)
-		stemmer = LancasterStemmer() 
+		# stemmer = LancasterStemmer() 
+
+		lemmatizer = WordNetLemmatizer()
 
 		for word in list_words:
 			wordtoken = nltk.word_tokenize(word)
@@ -290,7 +294,7 @@ class Bot:
 
 		similar_words.append(list_words)
 		for word in similar_words:   
-			word = [stemmer.stem(w.lower()) for w in word if w not in ignore_words]
+			word = [lemmatizer.lemmatize(w.lower()) for w in word if w not in ignore_words]
 			word = list(set(word))
 
 		return similar_words
@@ -456,7 +460,7 @@ def start():
 	Chatbot = Bot("Botto")
 
 
-	USE_PATTERN = False
+	USE_PATTERN = True
 
 	if USE_PATTERN:
 
@@ -526,6 +530,7 @@ def start():
 
 
 		Chatbot.defaultQPath = "Data/intent_ANN.json"
+		Chatbot.qPath = "Data/intent_queries_ANN_" +Chatbot.name +".json"
 		#Upload Queries Dataset (Optional)
 
 		file = "Program Details.xlsx"

@@ -25,7 +25,11 @@
                 "Hello",
                 "Hya",
                 "Wassup",
-                "Whats up"
+                "Whats up",
+                "Good Evening",
+                "Good morning",
+                "Good Afternoon",
+                "I hope you are well!"
             ],
             "responses": [
                 "Hi user, may I know your query?",
@@ -41,7 +45,7 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 7
+            "vocabSize": 16
         },
         "BotEnquiry": {
             "text": [
@@ -95,10 +99,10 @@
         "Thanks": {
             "text": [
                 "thank you",
-                "thanks",
+                "many thanks",
                 "Thanks",
-                "helpful",
-                "Thank you",
+                "you are very helpful",
+                "Thank you very much",
                 "Thank you so much",
                 "Thanks a lot"
             ],
@@ -111,20 +115,21 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 10
+            "vocabSize": 13
         },
         "UnderstandQuery": {
             "text": [
-                "understand",
                 "Do you understand me",
                 "Do you know what I am saying",
-                "you get me",
+                "Do you get me",
                 "Comprendo",
                 "Know what I mean",
                 "Do you get me?",
                 "I hope you undersand",
                 "Not what I asked",
-                "not what I meant"
+                "is not what I meant",
+                "I do not know",
+                "I have no idea"
             ],
             "responses": [
                 "I am sorry, I am still learning, would you like to help me learn so I can reply better?",
@@ -134,47 +139,55 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 20
+            "vocabSize": 25
         },
         "Swearing": {
             "text": [
-                "fuck off",
-                "fuck",
-                "twat",
-                "shit",
-                "bitch",
-                "fucker",
-                "shit",
-                "crap",
-                "fucking",
-                "dumbass",
-                "motherfucker",
-                "piece of shit",
-                "son of a bitch"
+                "Would you fuck off",
+                "What the fuck",
+                "What a twat",
+                "No shit stupid",
+                "Dumbass bitch",
+                "Shut up fucker",
+                "Piece of shit bot",
+                "What a crappy program",
+                "Piece of crap"
             ],
             "responses": [
-                "Please do not swear",
-                "How rude",
-                "That is not very nice"
+                "Please do not swear.",
+                "How rude.",
+                "That is not very nice.",
+                "Stark! Language."
             ],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 14
+            "vocabSize": 22
         },
         "GoodBye": {
             "text": [
-                "Quit",
+                "I want to Quit",
                 "Bye",
+                "Bye, I will take my leave",
                 "Adios",
                 "See you later",
                 "Goodbye",
                 "Talk to you later",
                 "Good bye",
                 "I will be going now",
-                "Have a great day!"
+                "Have a great day!",
+                "Talk to you later",
+                "Bye, Take Care",
+                "Have a good day!",
+                "Good day",
+                "Have a great day!",
+                "Great day to you sir!",
+                "Have a wonderful day!",
+                "Good night",
+                "Goodnight"
             ],
             "responses": [
+                "Goodbye, Take care",
                 "See you later",
                 "Have a nice day",
                 "Bye! Come back again soon."
@@ -182,17 +195,17 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 20
+            "vocabSize": 34
         },
         "Jokes": {
             "text": [
-                "Joke",
-                "funny",
-                "laugh",
-                "cheering up",
-                "hilarious",
-                "comedy",
-                "puns"
+                "Tell me a Joke",
+                "Want to know something funny",
+                "Tell me something funny",
+                "I wanna have a laugh",
+                "Can you make me laugh?",
+                "I need some cheering up",
+                "Do you know some jokes?"
             ],
             "responses": [
                 "I met a Dutch girl with inflatable shoes last week, phoned her up to arrange a date but unfortunately she'd popped her clogs.  ",
@@ -342,21 +355,21 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 8
+            "vocabSize": 23
         },
         "SelfAware": {
             "text": [
-                "self-aware",
-                "aware",
-                "alive",
-                "conscious",
-                "are you real?"
+                "Are you self-aware?",
+                "Are you aware?",
+                "Are you alive?",
+                "Are you conscious?",
+                "Are you real?"
             ],
             "responses": [
                 "That is an interesting question, can you prove that you are?",
                 "That is an difficult question, can you prove that you are?",
                 "That depends, can you prove that you are?",
-                "I don't know"
+                "I don't know, I can't prove that"
             ],
             "extension": {
                 "function": ""
@@ -365,15 +378,19 @@
         },
         "Query": {
             "text": [
-                "Can you tell me more about",
-                "Do you have more information on",
-                "What can you tell me about?",
-                "details",
-                "help",
-                "query",
-                "finding out",
-                "about",
-                "information"
+                "I need to know some details",
+                "Would you help me?",
+                "I have a query",
+                "I need help in finding out something",
+                "Can you tell me about?",
+                "I need some information",
+                "Can I have some information",
+                "Can you give me some details",
+                "Can you answer my questions?",
+                "I have a few questions regarding your organization",
+                "Do you know more about LLB?",
+                "What is the of?",
+                "What do you know about?"
             ],
             "responses": [
                 "Fetching <QUERY> details about <COURSE>..."
@@ -381,44 +398,53 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 18
+            "vocabSize": 40
         },
         "Contact": {
             "text": [
-                "contact",
-                "speak to",
-                "approach",
-                "talk to admin",
-                "talk",
-                "call",
-                "communication",
-                "get in touch",
-                "ring up",
-                "phone",
-                "communicate"
+                "I need to contact your business",
+                "I need to contact your organization",
+                "I need to contact your owners",
+                "Can I communicate with your owners?",
+                "I would like to contact your organization",
+                "Do you have contact information on the business",
+                "Do you have contact information about your organization?",
+                "Can I communicate with your administrator?",
+                "I would like to communicate with the people who own you.",
+                "I want to communicate with your owners",
+                "I want communication details",
+                "I need to talk to an administrator",
+                "I need to talk to the manager",
+                "I need to communicate to the manager"
             ],
             "responses": [],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 15
+            "vocabSize": 34
         },
         "Agree": {
             "text": [
-                "Agree",
+                "Agreed",
                 "Yes",
                 "Indeed",
                 "Positive",
                 "Sure",
-                "True",
                 "Correct",
-                "Yup"
+                "Yes it is correct.",
+                "Yes, you are right",
+                "Indeed you are correct",
+                "I Agree",
+                "Positively sure",
+                "True",
+                "It is the truth",
+                "You are correct"
             ],
             "responses": [],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 8
+            "vocabSize": 23
         },
         "Disagree": {
             "text": [
@@ -426,17 +452,22 @@
                 "No",
                 "Nope",
                 "Negative",
-                "False",
-                "Incorrect",
                 "Nah",
-                "Not Sure",
-                "Wrong"
+                "Never",
+                "False",
+                "That is incorrect",
+                "That's not true",
+                "Not Correct",
+                "I do not agree to this",
+                "No, it is wrong",
+                "This is wrong",
+                "Wrong that's incorrect"
             ],
             "responses": [],
             "extension": {
                 "function": ""
             },
-            "vocabSize": 10
+            "vocabSize": 26
         },
         "OutOfScope": {
             "text": [],
@@ -452,6 +483,216 @@
                 "function": ""
             },
             "vocabSize": 0
+        },
+        "Location": {
+            "text": [
+                "Where is MUJ?",
+                " How do I find Manipal University Jaipur?",
+                " How do I locate this college?",
+                " Where is this University?",
+                " What is the address of this university?",
+                " What is the address of MUJ?"
+            ],
+            "responses": [
+                "The University is located at, ",
+                "Manipal University Jaipur, ",
+                "Dehmi Kalan, ",
+                "Off Jaipur-Ajmer Expressway, ",
+                "Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 ",
+                "More details can be found at: https://jaipur.manipal.edu/muj/contact-us.html"
+            ],
+            "vocabSize": 19
+        },
+        "Owner": {
+            "text": [
+                "Who is the President of this College?",
+                " Who is the head of this University?",
+                " What is the name of the President of Manipal University Jaipur?",
+                " Who is the Dead of this College?",
+                " Does this college have a head?",
+                " Who is the head of this College?",
+                " Who are the managers of Manipal University Jaipur?",
+                " Who is the President of MUJ?",
+                " Who is the president of this University?",
+                " Is there a board of directors in this college?"
+            ],
+            "responses": [
+                "The more details about Board of Management can be found at: ",
+                "https://jaipur.manipal.edu/muj/about-us/board-of-management.html"
+            ],
+            "vocabSize": 30
+        },
+        "Timings": {
+            "text": [
+                "What is the timing of the College?",
+                " What time the college is open?",
+                " May I know the time I can contact Manipal University Jaipur?",
+                " How long the college will stay open?",
+                " What are the timings of MUJ?",
+                " At what time is the college open?",
+                " What is the time I can contact the University?"
+            ],
+            "responses": [
+                "The College timings are 9:00 to 18:00 in Indian Standard Time (IST)"
+            ],
+            "vocabSize": 27
+        },
+        "Affiliations": {
+            "text": [
+                "What are the acreditations of MUJ?",
+                " What are the Recognitions of Manipal University Jaipur?",
+                " What awards does this University hold?",
+                " Is the University UGC Affiliated?",
+                " What affiliations does this College have?",
+                " What are the awards given to this college?",
+                " Tell me the accreditations of this College."
+            ],
+            "responses": [
+                "Manipal University Jaipur is Affiliated with UGC, NAAC (with A+ score) and AICTE. More information can be found at: https://jaipur.manipal.edu/muj/about-us/recognitions-and-accreditations.html"
+            ],
+            "vocabSize": 27
+        },
+        "Courses": {
+            "text": [
+                "What are the courses offered in this college?",
+                " What courses does MUJ offer?",
+                " What  courses can I do here?",
+                " What Graudation can I do from here?",
+                " Does this college have ?",
+                " What courses are offered in MUJ?",
+                " Do you know about the courses in MUJ?",
+                " Do you have a list of Courses available are MUJ?",
+                " How many courses does Manipal University Jaipur offer?"
+            ],
+            "responses": [
+                "Manipal University Jaipur offers many courses like B.Tech., M.Tech., Law, Arts, Fashion Design, Management and much more. To know more about the Courses please go to: https://jaipur.manipal.edu/muj/academics.html"
+            ],
+            "vocabSize": 36
+        },
+        "Faculties": {
+            "text": [
+                "What are the Faculties of this College?",
+                " What departments does this college have?",
+                " What are the different Schools in this college?",
+                " Tell me about the departments of the college",
+                " Name the departments of Manipal University Jaipur",
+                " How many departments does MUJ have?"
+            ],
+            "responses": [
+                "The different courses are grouped into different Faculties each of which contain their respective Schools, and the Schools are groups of similar departments. More information at: https://jaipur.manipal.edu/muj/academics/institution-list.html"
+            ],
+            "vocabSize": 25
+        },
+        "Administration": {
+            "text": [
+                "How can I contact finance department?",
+                " I need to know more about the administration of this college.",
+                " Can I know more about the Administration department?",
+                " What can you tell me about the Administration Department?",
+                " How many administration departments are there?",
+                " Can I know more about the Finance Department?",
+                " What can you tell me about the Human Resource Department?",
+                " How is the HR management of the college."
+            ],
+            "responses": [
+                "More Information about MUJ Administration at: https://jaipur.manipal.edu/muj/about-us/administration.html"
+            ],
+            "vocabSize": 33
+        },
+        "Research": {
+            "text": [
+                "What are the research options available at MUJ?",
+                " What are the facilities available at Manipal University?",
+                " Can I do research from this University?",
+                " I want to know more about Research in MUJ",
+                " May I know more about Research in MUJ?",
+                " Do you know about Research facilities available in MUJ?",
+                " I would like to know more about PhD in this college",
+                " Can I apply for my Doctorate in MUJ?",
+                " I would like to know more about Doctor of Philosophy options available in Manipal."
+            ],
+            "responses": [
+                "More Information at: https://jaipur.manipal.edu/muj/research.html"
+            ],
+            "vocabSize": 39
+        },
+        "Facilities": {
+            "text": [
+                "What are the facilities available to Students in Manipal?",
+                " What are the facilities available for parents looking to stay at MUJ?",
+                " Can I know more about Hostel and Mess in MUJ?",
+                " What are the shops and food facilities available in MUJ?",
+                " Can I buy books in MUJ?",
+                " Does this College have a Library?",
+                " Do we have a Gym or any Sports Facilities available in MUJ?",
+                "What are the sports and extracurricular facilities available in MUJ?"
+            ],
+            "responses": [
+                "Manipal University Jaipur provides lots of facilities in various fields, for information check out: https://jaipur.manipal.edu/muj/life-at-muj/campus-facilities.html"
+            ],
+            "vocabSize": 42
+        },
+        "Calender": {
+            "text": [
+                "Can I know the important dates of this semester?",
+                " Where can I find the Academic Calender of this year?",
+                " What are the holidays of this semester?",
+                " Do you have a link to Academic Calender?",
+                " What can you tell me about the academic schedule of this year?",
+                " I would like to know about the holidays this year",
+                " What are the exam dates of this semester?",
+                " Can I know the last date of registration of this semester?",
+                " When are the mid term exams of this semester?"
+            ],
+            "responses": [
+                "Calender of Holidays and Academic events can be found at: https://jaipur.manipal.edu/muj/academics/Academic-Calender.html"
+            ],
+            "vocabSize": 41
+        },
+        "Fees": {
+            "text": [
+                "What are the fees for students?",
+                " What are the entrance fees for first year students in MUJ?",
+                " Can I know my fees for second year?",
+                " I need to know details about fees of my branch.",
+                " I want to know the amount I have to pay for my college tuition in Manipal University Jaipur",
+                " I want to pay my fees but I don't know the amount",
+                " can I know the fees for first year?"
+            ],
+            "responses": [
+                "Fee information can be found at: https://jaipur.manipal.edu/muj/admission/indian-students/fees.html"
+            ],
+            "vocabSize": 36
+        },
+        "Clubs": {
+            "text": [
+                "What clubs do students have in Manipal?",
+                " What are the local organizations formed by students in MUJ?",
+                " What do you know about extracurricular activities held by clubs?",
+                " Do you know about different clubs in MUJ?",
+                " I would like to know about student clubs in Manipal."
+            ],
+            "responses": [
+                "Information on Clubs can be found at: https://jaipur.manipal.edu/muj/life-at-muj/Student-CLUBS.html"
+            ],
+            "vocabSize": 29
+        },
+        "Placements": {
+            "text": [
+                "Do you have placement statistics from last year?",
+                " I would like to know about last year placements",
+                " What placements have the students got last year?",
+                " What do you know about placements in Engineering?",
+                " Can I know more about placement Opportunities at MUJ?",
+                " Can I know more about hiring in MUJ?",
+                " Can I have the details about Jobs and Placements?",
+                " I would like to know about hiring status of MUJ",
+                " What companies come for hiring in MUJ?"
+            ],
+            "responses": [
+                "Various Technical Companies like Dell, Microsoft, Adobe and HP come for hiring at MUJ Campus. Detailed Information about Placements can be found at: https://jaipur.manipal.edu/muj/admission/placement-training.html"
+            ],
+            "vocabSize": 39
         }
     },
     "Queries": {

@@ -1,5 +1,5 @@
 import nltk
-from nltk.stem.lancaster import LancasterStemmer
+# from nltk.stem.lancaster import LancasterStemmer
 import os
 import json
 import datetime
@@ -11,7 +11,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import tensorflow as tf
-
+from nltk.stem import WordNetLemmatizer
 
 class ANNClassifier:
 
@@ -67,8 +67,9 @@ class ANNClassifier:
 			w = nltk.word_tokenize(sentence)
 			words.extend(w)
 
-		stemmer = LancasterStemmer()    
-		words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+		# stemmer = LancasterStemmer()    
+		lemmatizer = WordNetLemmatizer()
+		words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_words]
 		words = list(set(words))
 
 		for i in range(len(dataX)):
@@ -76,7 +77,7 @@ class ANNClassifier:
 			outputY = [0] * len(classes)
 
 			w = nltk.word_tokenize(dataX[i])
-			w = [stemmer.stem(wrd.lower()) for wrd in w if wrd not in ignore_words]
+			w = [lemmatizer.lemmatize(wrd.lower()) for wrd in w if wrd not in ignore_words]
 			for wrd in words:
 				bag.append(1) if wrd in w else bag.append(0)
 			trainX.append(bag)
@@ -102,9 +103,11 @@ class ANNClassifier:
 		classes = labels['classes']
 		
 		ignore_words = list(string.punctuation)
-		stemmer = LancasterStemmer() 
+		# stemmer = LancasterStemmer()
+		lemmatizer = WordNetLemmatizer()
+		 
 		w = nltk.word_tokenize(ipstring)
-		w = [stemmer.stem(wrd.lower()) for wrd in w if wrd not in ignore_words]
+		w = [lemmatizer.lemmatize(wrd.lower()) for wrd in w if wrd not in ignore_words]
 		bag = []
 
 		for wrd in words:

@@ -14,16 +14,26 @@
 #minimize{
     cursor: pointer;
 }
+#win{
+    position: fixed;
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index:11;
+}
 #chatbox{
     display: block;
-    right: 30px;
+    right: 25vw;
     bottom: 20px;
     position: fixed;
     border-radius: 10px;
-    width: 300px;
-    height: 400px;
+    width: 50vw;
+    height: 530px;
     object-fit: contain;
     background-color: white;
+    z-index:13;
 }
 .chat{
     height: 100%;
@@ -36,7 +46,7 @@
     background-color: rgb(160, 33, 2);
     padding: 7px;
     padding-left: 15px;
-    width: 300px;
+    width: 50vw;
     display: table-cell;
 }
 #head_name_logo{
@@ -63,7 +73,7 @@
 }
 .chat_logs{
     display: block;
-    height: 310px;
+    height: 440px;
     width: 100%;
     background-color: whitesmoke;
     overflow-y: auto;

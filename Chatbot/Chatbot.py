@@ -204,13 +204,13 @@ class Bot:
 
 
 	def selfLearnCollect(self, query, response,intent=None, probability=None):
-		num = Bot.findMaxKey()+1
+		#num = Bot.findMaxKey()+1
 		connection = sqlite3.connect("Data/SelfLearn.db")
 		c = connection.cursor()
-		sql = """CREATE TABLE IF NOT EXISTS selfLearn (num INT PRIMARY KEY, query TEXT, response TEXT, intent TEXT, prob REAL)"""
+		sql = """CREATE TABLE IF NOT EXISTS selfLearn (num INTEGER PRIMARY KEY AUTOINCREMENT, query TEXT, response TEXT, intent TEXT, prob REAL)"""
 		c.execute(sql)
 
-		sql = """INSERT INTO selfLearn(num, query, response, intent) VALUES ({},"{}","{}", "{}", {});""".format(num,query,response, intent, probability)
+		sql = """INSERT INTO selfLearn(query, response, intent) VALUES ("{}","{}", "{}");""".format(query,response, intent)
 		c.execute(sql)
 		connection.commit()
 
@@ -224,7 +224,7 @@ class Bot:
 		sql = """INSERT INTO contact(sessionID, email, mobile) VALUES ({},"{}","{}");""".format(sessionID, email, mobile)
 		c.execute(sql)
 		connection.commit()
-		print("SUCCESSFULLY SAVED")
+		return "SUCCESSFULLY SAVED"
 
 
 	### PATTERN MATCHING SYSTEM  FUNCTIONS###
@@ -241,7 +241,9 @@ class Bot:
 		##Removing special characters
 		# input = re.sub(r'[^a-zA-Z0-9 \n\.]', ' ', input).lower()
 		inputwd = nltk.word_tokenize(input)
+		print("checkIntents",input,inputwd)
 		inputwd = [stemmer.stem(w.lower()) for w in inputwd if w not in ignore_words]
+		print("checkIntents2",input,inputwd)
 		inputwd = list(set(inputwd))
 
 		### PATTERN MATCHING APPROACH
@@ -260,7 +262,7 @@ class Bot:
 				temp[intent] = temp[intent]/data[intent]['vocabSize']
 		most = 0
 		#print(temp)
-		print(temp)
+		#print(temp)
 		for key in temp:
 			if temp[key] > most:
 				intent_found[0] = key
@@ -269,7 +271,6 @@ class Bot:
 		### ADD OUT OF SCOPE IF LIST IS EMPTY
 		if intent_found == [""]:
 			intent_found[0] = "OutOfScope"
-
 		return list(set(intent_found))
 
 	def fetchSimilar(list_words):
@@ -391,7 +392,7 @@ class Bot:
 			c = connection.cursor()
 			sql = """SELECT MAX(num) FROM selfLearn;"""
 			c.execute(sql)
-			return int(c.fetchone()[0])
+			return c.fetchone()[0]
 		else:
 			return 0
 
@@ -401,7 +402,7 @@ class Bot:
 
 		intents = ['Agree', 'Disagree']
 		found = self.checkIntents(intents= intents, input=query)
-
+		#print(query,found)
 		if 'Agree' in found:
 			return True
 		elif 'Disagree' in found:
@@ -636,7 +637,7 @@ def ConversationFlow_21(Bot ,inputstr, intents, found, keyCol="",state={}):
 	state['email'] = ""
 	state['mobile'] = ""
 	
-	print(Bot.Confirm(inputstr))
+	#print(Bot.Confirm(inputstr))
 	if(Bot.Confirm(inputstr)):
 		msg.append( Bot.ResponseStr("Please enter your email...\n") )
 		state['state']=22
@@ -655,7 +656,7 @@ def ConversationFlow_22(Bot ,inputstr, intents, found, keyCol="",state={}):
 
 def ConversationFlow_23(Bot ,inputstr, intents, found, keyCol="",state={}):
 	msg=[]
-	print(Bot.Confirm(inputstr))
+	#print(Bot.Confirm(inputstr))
 	if(Bot.Confirm(inputstr)):
 		msg.append(Bot.ResponseStr("Please enter your phone number (without spaces)...\n")) 
 		state['state']=24
@@ -675,6 +676,29 @@ def ConversationFlow_24(Bot ,inputstr, intents, found, keyCol="",state={}):
 	state['state']=0
 	return msg,intents,state
 
+def ConversationFlow_3(Bot ,inputstr, intents, found, keyCol="",state={}):
+	ip = inputstr
+	msg=[]
+	if Bot.Confirm(ip, default=False):
+		msg.append(Bot.ResponseStr("What would be a possible response of your Query?"))
+		state['state']=31
+		return msg,intents,state
+		#Bot.selfLearnCollect(inputstr,ip)
+		#msg.append( Bot.ResponseStr("Thank you for putting effort in making me better!\n"))
+	else:
+		msg.append( Bot.ResponseStr("Okay, continuing to solve your queries\n"))
+	state.pop('query')
+	state['state']=0
+	return msg,intents,state
+
+def ConversationFlow_31(Bot ,inputstr, intents, found, keyCol="",state={}):
+	msg=[]
+	Bot.selfLearnCollect(state['query'],inputstr)
+	msg.append( Bot.ResponseStr("Thank you for putting effort in making me better!\n"))
+	state.pop('query')
+	state['state']=0
+	return msg,intents,state
+
 # Define Conversation Flow
 def ConversationFlow(Bot ,inputstr, intents, found, keyCol="",state={}):
 	if state['state']==1:
@@ -687,6 +711,10 @@ def ConversationFlow(Bot ,inputstr, intents, found, keyCol="",state={}):
 		return ConversationFlow_23(Bot ,inputstr, intents, found, keyCol,state)
 	if state['state']==24:
 		return ConversationFlow_24(Bot ,inputstr, intents, found, keyCol,state)
+	if state['state']==3:
+		return ConversationFlow_3(Bot ,inputstr, intents, found, keyCol,state)
+	if state['state']==31:
+		return ConversationFlow_31(Bot ,inputstr, intents, found, keyCol,state)
 	msg=[]
 	if(Bot.Query in found and os.path.exists(Bot.qPath)):
 		Qfound = Bot.checkQuery(inputstr)
@@ -723,13 +751,16 @@ def ConversationFlow(Bot ,inputstr, intents, found, keyCol="",state={}):
 	elif(Bot.OutOfScope in found):
 		msg.append( Bot.Response("OutOfScope") + "\n")
 		###SELF LEARNING DATA COLLECTION CODE REMOVE COMMENTS TO RUN WITH OUT SELF LEARNING
-		# msg.append( Bot.ResponseStr("Would you like to contribute by providing a possible response to your previous query?") + "\n" + Fore.BLUE + "User: " + Style.RESET_ALL)
-		# ip = str(input())
-		# if Bot.Confirm(ip, default=False):
-		# 	Bot.selfLearnCollect(inputstr,ip)
-		# 	msg.append( Bot.ResponseStr("Thank you for putting effort in making me better!\n"))
-		# else:
-		# 	msg.append( Bot.ResponseStr("Okay, continuing to solve your queries\n"))
+		msg.append(Bot.ResponseStr("Would you like to contribute by providing a possible response to your previous query?"))
+		state['state']=3
+		state['query']=inputstr
+		return msg,intents,state
+		#ip = str(input())
+		#if Bot.Confirm(ip, default=False):
+		#	Bot.selfLearnCollect(inputstr,ip)
+		#	msg.append( Bot.ResponseStr("Thank you for putting effort in making me better!\n"))
+		#else:
+		#	msg.append( Bot.ResponseStr("Okay, continuing to solve your queries\n"))
 	elif(Bot.Time in found):
 		msg.append( Bot.ResponseStr("Current time is " + str(Bot.timeFetch())) + "\n")
 	else:
@@ -798,8 +829,8 @@ def findresponse(Chatbot,intents,user_msg,state,chatbot_type):
 		found = Chatbot.checkIntents(intents= intents, input=inputstr)
 		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
 			
-		if "GoodBye" in found:
-			f=False
+		#if "GoodBye" in found:
+		#	f=False
 		return Chatbot,intents,f,msg,state
 	else:
 		f=True
@@ -821,7 +852,7 @@ def findresponse(Chatbot,intents,user_msg,state,chatbot_type):
 		# 		continue
 		found = ANN.ANNClassifier.prediction(inputstr, intents, model = chatbot_type[1], labels=chatbot_type[2])
 		msg,intents,state=ConversationFlow(Chatbot, inputstr, intents, found, keyCol=Chatbot.keyCol,state=state)
-		if "GoodBye" in found:
-			f=False 
+		#if "GoodBye" in found:
+		#	f=False 
 		return Chatbot,intents,f,msg,state
 

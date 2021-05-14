@@ -3,11 +3,12 @@
 <head>
 	<title>Manipal University Jaipur Demo</title>
 	<!-- for demo webpage--><link rel="stylesheet" type="text/css" href="../static/styles.css">
-	<!-- for chatbox--><link rel="stylesheet" type="text/css" href="../static/chatstyle.css?x=2sdfc0">
+	<!-- for chatbox--><link rel="stylesheet" type="text/css" href="../static/chatstyle.css?x=2yhbjhbc0">
 	<!-- for demo webpage--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"-->
 	<!-- for chatbox--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chatstyle.css') }}"-->
 </head>
 <body>
+    <div id="win"></div>
     <div class="header">
         <div class="header1">
             <p>Sample Chatbot Demostration</p>
@@ -88,11 +89,13 @@
         {
             document.getElementById('chatbot_logo').style.display="none";
             document.getElementById('chatbox').style.display="block";
+            document.getElementById('win').style.display="block";
         }
         function hide_bot()
         {
             document.getElementById('chatbot_logo').style.display="block";
             document.getElementById('chatbox').style.display="none";
+            document.getElementById('win').style.display="none";
         }
     </script>
 </body>

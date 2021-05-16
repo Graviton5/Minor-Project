@@ -460,7 +460,7 @@ def start():
 	Chatbot = Bot("Botto")
 
 
-	USE_PATTERN = True
+	USE_PATTERN = False
 
 	if USE_PATTERN:
 

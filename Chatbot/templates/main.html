@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin-Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/admin_style.css?asvdf">
+        <!--link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"-->
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+            <a class="navbar-brand" href="http://localhost:5001/main/">Admin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:5001/change_pass_page/">Change password</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:5001/logout/">Logout</a>
+                </li>
+            </ul>
+            </div>
+        </nav>
+        {% if len_entries>0 %}
+        <div class="container-fluid content">
+        <form action="http://localhost:5001/updated/" method="POST">
+            <table>
+                <tr class="head_content">
+                        <th class="delhead">Delete</th>
+                        <th class="queryhead">Query</th>
+                        <th class="resphead">Response</th>
+                        <th class="inthead">Intent</th>
+                        <th class="acchead">Accept</th>
+                </tr>
+                {% for entry in entries %}
+                    <tr id="row{{entry[0]}}" class="row_table">
+                        <td id="delete_{{entry[0]}}"><input type="checkbox" onclick="reject('{{entry[0]}}');" name="" id="delete_check_{{entry[0]}}"></td>
+                        <td>{{entry[1]}}</td>
+                        <td>{{entry[2]}}</td>
+                        <td id="intent_row{{entry[0]}}" class="intent_box">
+                            <select name="intent{{entry[0]}}" id="intent{{entry[0]}}" onchange="selectchange('{{entry[0]}}')">
+                                <option value="select">Select</option>
+                                <optgroup label="Intents">
+                                    {% for i in intents %}
+                                        <option value="{{'1'+i}}">{{i}}</option>
+                                    {% endfor %}
+                                    <option value="1intents_other">Other</option>
+                                </optgroup>
+                                <optgroup label="Query Names">
+                                    {% for i in queryNames %}
+                                        <option value="{{'2'+i}}">{{i}}</option>
+                                    {% endfor %}
+                                    <option value="2queryNames_other">Other</option>
+                                </optgroup>
+                                <optgroup label="Query Types">
+                                    {% for i in queryTypes %}
+                                        <option value="{{'3'+i}}">{{i}}</option>
+                                    {% endfor %}
+                                    <option value="3queryTypes_other">Other</option>
+                                </optgroup>
+                            </select>
+                            <input type='text' name='other_{{entry[0]}}' id="other_input_{{entry[0]}}" style="display:none;" placeholder="Intent name">
+                        </td>
+                        <td id="accept_{{entry[0]}}"><p id="cannot_accept_{{entry[0]}}" style="display:none;">Cannot accept default intent</p><input type="checkbox" onclick="acc('{{entry[0]}}');" name="" id="accept_check_{{entry[0]}}"></td>
+                        <input type="hidden" id="set{{entry[0]}}" name="set{{entry[0]}}" value=0>
+                    </tr>
+                {% endfor %}
+            </table>
+            <button type="Submit">Submit</button>
+        </form>
+        </div>
+        {% else %}
+        <div class="content">
+            <h3>No queries to update</h3>
+        </div>
+        {% endif %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script>
+            function selectchange(i)
+            {
+                t=document.getElementById('intent'+i).value;
+                if(t=='select')
+                {
+                    document.getElementById('accept_'+i).style.backgroundColor="white";
+                    document.getElementById('accept_check_'+i).checked=false;
+                    if(document.getElementById('set'+i).value==2)
+                        document.getElementById('set'+i).value=0;
+                }
+                else
+                    document.getElementById('cannot_accept_'+i).style.display="none";
+                if(t=="1intents_other" || t=="2queryNames_other" || t=="3queryTypes_other")
+                {
+                    document.getElementById('other_input_'+i).style.display="inline";
+                }
+                else
+                {
+                    document.getElementById('other_input_'+i).style.display="none";
+                }
+            }
+            function acc(i)
+            {
+                console.log(i);
+                if(document.getElementById('set'+i).value==0)
+                {
+                    if( document.getElementById('intent'+i).value!="select")
+                    {
+                        document.getElementById('set'+i).value=2;
+                        document.getElementById('accept_'+i).style.backgroundColor="rgb(177, 247, 150)";
+                        document.getElementById('cannot_accept_'+i).style.display="none";
+                    }
+                    else
+                    {
+                        document.getElementById('accept_check_'+i).checked=false;
+                        //document.getElementById('cannot_accept_'+i).style.display="block";
+                    }
+                }
+                else if(document.getElementById('set'+i).value==1)
+                {
+                    if( document.getElementById('intent'+i).value!="select")
+                    {
+                    document.getElementById('delete_check_'+i).checked=false;
+                    document.getElementById('delete_'+i).style.backgroundColor="white";
+                    document.getElementById('set'+i).value=2;
+                    document.getElementById('accept_'+i).style.backgroundColor="rgb(177, 247, 150)";
+                        document.getElementById('cannot_accept_'+i).style.display="none";
+                    }
+                    else
+                    {
+                        document.getElementById('accept_check_'+i).checked=false;
+                        //document.getElementById('cannot_accept_'+i).style.display="block";
+                    }
+                }
+                else
+                {
+                    document.getElementById('set'+i).value=0;
+                    document.getElementById('accept_'+i).style.backgroundColor="white";
+                }
+            }
+            function reject(i)
+            {
+                if(document.getElementById('set'+i).value==0)
+                {
+                    document.getElementById('set'+i).value=1;
+                    document.getElementById('delete_'+i).style.backgroundColor="rgb(235, 127, 127)";
+                }
+                else if(document.getElementById('set'+i).value==2)
+                {
+                    document.getElementById('accept_check_'+i).checked=false;
+                    document.getElementById('accept_'+i).style.backgroundColor="white";
+                    document.getElementById('set'+i).value=1;
+                    document.getElementById('delete_'+i).style.backgroundColor="rgb(235, 127, 127)";
+                }
+                else
+                {
+                    document.getElementById('set'+i).value=0;
+                    document.getElementById('delete_'+i).style.backgroundColor="white";
+                }
+            }
+        </script>
+    </body>
+</html>

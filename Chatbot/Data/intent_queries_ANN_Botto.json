@@ -494,14 +494,8 @@
                 " What is the address of MUJ?"
             ],
             "responses": [
-                "The University is located at, ",
-                "Manipal University Jaipur, ",
-                "Dehmi Kalan, ",
-                "Off Jaipur-Ajmer Expressway, ",
-                "Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 ",
-                "More details can be found at: https://jaipur.manipal.edu/muj/contact-us.html"
-            ],
-            "vocabSize": 19
+                "The University is located at Manipal University Jaipur, Dehmi Kalan, Off Jaipur-Ajmer Expressway, Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 More details can be found at: https://jaipur.manipal.edu/muj/contact-us.html"
+            ]
         },
         "Owner": {
             "text": [
@@ -519,8 +513,7 @@
             "responses": [
                 "The more details about Board of Management can be found at: ",
                 "https://jaipur.manipal.edu/muj/about-us/board-of-management.html"
-            ],
-            "vocabSize": 30
+            ]
         },
         "Timings": {
             "text": [
@@ -534,8 +527,7 @@
             ],
             "responses": [
                 "The College timings are 9:00 to 18:00 in Indian Standard Time (IST)"
-            ],
-            "vocabSize": 27
+            ]
         },
         "Affiliations": {
             "text": [
@@ -549,8 +541,7 @@
             ],
             "responses": [
                 "Manipal University Jaipur is Affiliated with UGC, NAAC (with A+ score) and AICTE. More information can be found at: https://jaipur.manipal.edu/muj/about-us/recognitions-and-accreditations.html"
-            ],
-            "vocabSize": 27
+            ]
         },
         "Courses": {
             "text": [
@@ -566,8 +557,7 @@
             ],
             "responses": [
                 "Manipal University Jaipur offers many courses like B.Tech., M.Tech., Law, Arts, Fashion Design, Management and much more. To know more about the Courses please go to: https://jaipur.manipal.edu/muj/academics.html"
-            ],
-            "vocabSize": 36
+            ]
         },
         "Faculties": {
             "text": [
@@ -580,8 +570,7 @@
             ],
             "responses": [
                 "The different courses are grouped into different Faculties each of which contain their respective Schools, and the Schools are groups of similar departments. More information at: https://jaipur.manipal.edu/muj/academics/institution-list.html"
-            ],
-            "vocabSize": 25
+            ]
         },
         "Administration": {
             "text": [
@@ -596,8 +585,7 @@
             ],
             "responses": [
                 "More Information about MUJ Administration at: https://jaipur.manipal.edu/muj/about-us/administration.html"
-            ],
-            "vocabSize": 33
+            ]
         },
         "Research": {
             "text": [
@@ -613,8 +601,7 @@
             ],
             "responses": [
                 "More Information at: https://jaipur.manipal.edu/muj/research.html"
-            ],
-            "vocabSize": 39
+            ]
         },
         "Facilities": {
             "text": [
@@ -629,8 +616,7 @@
             ],
             "responses": [
                 "Manipal University Jaipur provides lots of facilities in various fields, for information check out: https://jaipur.manipal.edu/muj/life-at-muj/campus-facilities.html"
-            ],
-            "vocabSize": 42
+            ]
         },
         "Calender": {
             "text": [
@@ -646,8 +632,7 @@
             ],
             "responses": [
                 "Calender of Holidays and Academic events can be found at: https://jaipur.manipal.edu/muj/academics/Academic-Calender.html"
-            ],
-            "vocabSize": 41
+            ]
         },
         "Fees": {
             "text": [
@@ -661,8 +646,7 @@
             ],
             "responses": [
                 "Fee information can be found at: https://jaipur.manipal.edu/muj/admission/indian-students/fees.html"
-            ],
-            "vocabSize": 36
+            ]
         },
         "Clubs": {
             "text": [
@@ -674,8 +658,7 @@
             ],
             "responses": [
                 "Information on Clubs can be found at: https://jaipur.manipal.edu/muj/life-at-muj/Student-CLUBS.html"
-            ],
-            "vocabSize": 29
+            ]
         },
         "Placements": {
             "text": [
@@ -691,8 +674,7 @@
             ],
             "responses": [
                 "Various Technical Companies like Dell, Microsoft, Adobe and HP come for hiring at MUJ Campus. Detailed Information about Placements can be found at: https://jaipur.manipal.edu/muj/admission/placement-training.html"
-            ],
-            "vocabSize": 39
+            ]
         }
     },
     "Queries": {
@@ -1156,8 +1138,7 @@
             "Course": [
                 "May I know your course?",
                 "I need to know your Course first",
-                "Can you tell me your course?offered courses",
-                "education options"
+                "Can you tell me your course?"
             ],
             "Eligibility": [
                 "Eligibility",

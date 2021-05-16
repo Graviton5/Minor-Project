@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin-Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/admin_style.css?bdcerwgjhbhs">
+        <!--link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"-->
+    </head>
+    <body>
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+              <!-- Tabs Titles -->
+          
+              <!-- Icon -->
+              <div class="fadeIn first">
+                <h1>Admin Login</h1>
+              </div>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p class="fadeIn second" style="color: rgb(211, 56, 56);margin: 0px;">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+              <!-- Login Form -->
+              <form action="http://localhost:5001/login/" method="POST">
+                <input type="text" id="login" class="fadeIn third" name="email" placeholder="Email">
+                <input type="password" id="password" class="fadeIn fourth" name="pwd" placeholder="Password">
+                <input type="submit" class="fadeIn fifth" value="Log In">
+              </form>
+          
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </body>
+</html>

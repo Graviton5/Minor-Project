@@ -373,7 +373,8 @@
                 "query",
                 "finding out",
                 "about",
-                "information"
+                "information",
+                "Can I know more about BTech in CSE?"
             ],
             "responses": [
                 "Fetching <QUERY> details about <COURSE>..."
@@ -381,7 +382,7 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 18
+            "vocabSize": 23
         },
         "Contact": {
             "text": [
@@ -921,8 +922,6 @@
             "Eligibility": [
                 "Eligibility",
                 "eligibility",
-                "admission details",
-                "admission",
                 "exam",
                 "MET",
                 "Entrance Test",

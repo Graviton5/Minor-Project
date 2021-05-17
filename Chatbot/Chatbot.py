@@ -544,7 +544,7 @@ def start():
 
 		dict_words = {"all":['complete', 'everything', 'all', 'total', 'full'],
 		"Course":["May I know your course?","I need to know your Course first","Can you tell me your course?"],
-		"Eligibility":["Eligibility", "eligibility","admission details","admission","exam","MET","Entrance Test","Marks"], 
+		"Eligibility":["Eligibility", "eligibility","conditions to join","exam","MET","Entrance Test","Marks"], 
 		"Scope":["Scope"], 
 		"Admission Criteria":["course criteria","criteria","admission criteria","admission"], 
 		"Duration":["duration","length of course","time of the course","help"]}
@@ -629,8 +629,9 @@ def ConversationFlow_1(Bot ,inputstr, intents, found, keyCol="",state={}):
 					msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
 		else:
 			for query in Qfound[1]:
+				query = query.replace(" ", "_")
 				if(info[query] != "Empty"):
-					msg.append( Bot.ResponseStr( query + " of " + Qfound[0][0] +" is \n" + info[query] + "\n"))
+					msg.append( Bot.ResponseStr( query.replace("_"," ") + " for " + Qfound[0][0] +" is \n" + info[query] + "\n"))
 	else:
 		msg.append( Bot.ResponseStr("Information regarding the course cant be found please try again.\n"))
 	state['state']=0
@@ -736,14 +737,17 @@ def ConversationFlow(Bot ,inputstr, intents, found, keyCol="",state={}):
 			if len(Qfound[1]) < 1:
 				Qfound[1].append("all")
 			info = Bot.fetchQuery(Qfound[0][0], Bot.findKey())
+
 			if "all" in Qfound[1]: 
 				for key in info:
 					if(info[key] != "Empty" and key != str(Bot.findKey()) and key != "Full_Name"):
-						msg.append( Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
+						msg.append(Bot.ResponseStr("Info regarding " + key + " in course  " + Qfound[0][0] + " is \n" + info[key] + "\n"))
 			else:
+				print(Qfound[1])
 				for query in Qfound[1]:
+					query = query.replace(" ", "_")
 					if(info[query] != "Empty"):
-						msg.append( Bot.ResponseStr( query + " of " + Qfound[0][0] +" is \n" + info[query] + "\n"))
+						msg.append(Bot.ResponseStr( query.replace("_"," ") + " for " + Qfound[0][0] +" is \n" + info[query] + "\n"))
 		else:
 			msg.append( Bot.ResponseStr("Information regarding the course cant be found please try again.\n"))
 	elif(Bot.Contact in found):

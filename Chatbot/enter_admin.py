@@ -1,7 +1,7 @@
 import sqlite3 
 
 def add(name,email,password,bot_name):
-    cur=sqlite3.connect('admin.db')
+    cur=sqlite3.connect('Data/admin.db')
     c=cur.cursor()
     c.execute("""
     CREATE TABLE IF NOT EXISTS admin(

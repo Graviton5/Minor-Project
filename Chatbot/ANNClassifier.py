@@ -116,7 +116,7 @@ class ANNClassifier:
 		prediction = model.predict([bag])
 
 		print(np.max(prediction), classes[np.argmax(prediction)], Threshold, np.max(prediction) > Threshold)
-		if np.max(prediction) > Threshold and classes[np.argmax(prediction)] in intents:
+		if np.max(prediction) >= Threshold and classes[np.argmax(prediction)] in intents:
 			return [classes[np.argmax(prediction)]]
 		else:
 			return ['OutOfScope']

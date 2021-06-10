@@ -2,6 +2,7 @@ from flask import Flask, render_template, session
 from flask_socketio import SocketIO
 from flask_socketio import join_room,leave_room
 import Chatbot
+#import Text
 #import demo
 
 app = Flask(__name__)
@@ -34,7 +35,17 @@ def connected():
         room=rooms_free.pop()
         session['room']=room 
         join_room(room)
-    socketio.emit('my response',{'message':message},to=session['room'])
+    array=[]
+    temp=[message]
+    '''for a in temp:
+        if ',' in a:
+            a=a.split(',')
+            for i in a:
+                array.append(i)
+        else:
+            array.append(a)'''
+    array=temp
+    socketio.emit('my response',{'message':message,'array':array},to=session['room'])
     print('connect',rooms,rooms_free,rooms_occupied)
 
 
@@ -58,7 +69,18 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
         session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=Chatbot.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'],session['type'])
         #session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=demo.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'])
         for x in json['message']:
-            socketio.emit('my response', {'message':x},to=session['room'])
+            #Text.run(x)
+            array=[]
+            temp=x.split('. ')
+            '''for a in temp:
+                if ',' in a:
+                    a=a.split(',')
+                    for i in a:
+                        array.append(i)
+                else:
+                    array.append(a)'''
+            array=temp
+            socketio.emit('my response', {'message':x,'array':array},to=session['room'])
         if not session['f']:
             socketio.emit('quit it',to=session['room'])
 

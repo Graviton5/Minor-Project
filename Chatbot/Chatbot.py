@@ -243,9 +243,7 @@ class Bot:
 		##Removing special characters
 		# input = re.sub(r'[^a-zA-Z0-9 \n\.]', ' ', input).lower()
 		inputwd = nltk.word_tokenize(input)
-		print("checkIntents",input,inputwd)
 		inputwd = [lemmatizer.lemmatize(w.lower()) for w in inputwd if w not in ignore_words]
-		print("checkIntents2",input,inputwd)
 		inputwd = list(set(inputwd))
 
 		### PATTERN MATCHING APPROACH

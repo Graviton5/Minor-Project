@@ -23,6 +23,19 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index:11;
 }
+#chat_link{
+    position: fixed;
+    bottom: 70px;
+    right: 70px;
+    z-index:20;
+    max-width:250px;
+    padding: 12px;
+    word-wrap: break-word;
+    background-color: rgb(227, 243, 194);
+    border-color: rgb(195, 221, 143);
+    border-radius: 20px;
+    cursor: pointer;
+}
 #chatbox{
     display: block;
     right: 25vw;
@@ -109,6 +122,13 @@
     margin: 5px;
     max-width: 80%;
     word-wrap: break-word;
+}
+#speak{
+    position: absolute;
+    right:40px;
+    margin-right: 5px;
+    bottom: -5px;
+    cursor: pointer;
 }
 .enter{
     display: block;

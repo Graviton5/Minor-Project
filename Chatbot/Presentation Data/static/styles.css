@@ -1,0 +1,72 @@
+html,body{
+    margin:0px;
+    overflow: hidden;
+}
+.header{
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+}
+.header1{
+    width: 100%;
+    background-color: rgb(141, 11, 11);
+    padding: 5px;
+    color:white;
+}
+.header1 p{
+    font-size: 20px;
+    width:80%;
+    margin:0 auto;
+    padding: 10px 0;
+    text-align: center;
+    font-family: Raleway, sans-serif;
+}
+.header2{
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(247, 235, 235);
+    display: block;
+    overflow: auto;
+
+}
+.header2 ul{
+    list-style-type: none;
+    margin: 0px auto;
+    width:70%;
+}
+.header2 ul li{
+    padding:5px;
+    height:100%;
+    float: right;
+    margin-right: 20px;
+}
+.header2 ul li:hover{
+    cursor: pointer;
+    background-color: #DDD;
+}
+.header3{
+    background-color: rgb(255, 208, 0);
+    display: block;
+    overflow: auto;
+    padding: 0px;
+}
+.header3 .logo{
+    clip-path:polygon(0 0, 300px 0, 400px 200px, 0 100px);
+    background-color: white;
+    width:30%;
+}
+.header3 img{
+    position:relative;
+    left:20%;
+    margin: 0px;
+}
+.container{
+    background-image: url("5.jpg");
+
+    background-position: 0 -50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    width: 100vw;
+    height:100vh;
+}

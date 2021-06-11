@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Botomatic Interface - For testing</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div class="MainWindow">
+		<div class="chatbox">
+			<div class="chatbox-header">
+				<p>Chatbot</p>
+			</div>
+			<div class="chatbox-body">
+				<div class="chatbox-overlay">   
+				</div>
+				<div class="chat-logs">
+				   
+				</div><!--chat-log -->
+			
+			</div>
+		</div>
+		<div class="inputText">
+			<form>
+				<input type="text" name="input" class="message" placeholder="Chat here...">
+				<button type="submit" class="sendbtn" id="sendbtn">Send</button>
+			</form>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  	<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
+  	<script type="text/javascript">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on( 'connect', function() {
+		socket.emit( 'my event', {
+			data: 'User Connected'
+		} )
+		var form = $( 'form' ).on( 'submit', function( e ) {
+			e.preventDefault()
+			let user_input = ''
+			user_input=$( 'input.message' ).val()
+			socket.emit( 'my event', {
+			'message' : user_input
+			} )
+			$( 'div.chat-logs' ).append( '<div><b style="color: #000;float:left">YOU :&emsp; </b> '+user_input+'</div>' )
+			$( 'input.message' ).val( '' ).focus()
+		} )
+    } )
+    socket.on( 'my response', function( msg ) {
+    console.log( msg )
+    $( 'div.chat-logs' ).append( '<div><b style="color: #000;float:left"></b> '+msg.message+'</div>' )
+    })
+	socket.on('disconnect',function(){
+		$('div.chat-logs').append('<div><b style="color: #000;float:left">Server Disconnected</b>')
+		document.getElementById('sendbtn').disabled=true
+	})
+	socket.on('quit it',function(){
+		socket.disconnect()
+	})
+  </script>
+
+</body>
+</html>

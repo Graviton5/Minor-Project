@@ -84,6 +84,22 @@
     margin-right: 10px;
     float: right;
 }
+#mute{
+    height: 22px;
+    vertical-align: middle;
+    float: right;
+    margin-right: 10px;
+    margin-top:5px;
+    cursor: pointer;
+}
+#volume{
+    vertical-align: middle;
+    float: right;
+    margin-right: 10px;
+    margin-top: 7px;
+    cursor: pointer;
+    display: none;
+}
 .chat_logs{
     display: block;
     height: 440px;

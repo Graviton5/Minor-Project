@@ -3,7 +3,7 @@
 <head>
 	<title>Manipal University Jaipur Demo</title>
 	<!-- for demo webpage--><link rel="stylesheet" type="text/css" href="../static/styles.css">
-	<!-- for chatbox--><link rel="stylesheet" type="text/css" href="../static/chatstyle.css?jhujhyjknbjdfv">
+	<!-- for chatbox--><link rel="stylesheet" type="text/css" href="../static/chatstyle.css?jbhjdfv">
 	<!-- for demo webpage--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"-->
 	<!-- for chatbox--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chatstyle.css') }}"-->
 </head>
@@ -40,6 +40,8 @@
                 <img src="../static/bot.jpg" alt="Botto" id="head_name_logo">
                 <h3>Botto</h3>
                 <h2 id="minimize" onclick="hide_bot();">-</h2>
+                <img src="../static/speak.svg?hxbd" id="volume" alt="" onclick="canspeak();">
+                <img src="../static/mute.svg" id="mute" alt="" onclick="dontspeak();">
             </div>
             <div class="chat_logs" id="chat_logs">
                 
@@ -57,6 +59,7 @@
   	<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
   	<script type="text/javascript">
         var flag=false;
+        var speak=true;
         var message=false;
         hide_bot();
         document.getElementById('chat_link').style.display="none";
@@ -83,12 +86,15 @@
         function gotmsg(msg)
         {
             $( 'div.chat_logs' ).append( '<div class="line"><div class="bot_reply">'+msg.message+'</div></div>' )
-            msg.array.forEach(element => {
-                console.log(element);
-                var speech = new SpeechSynthesisUtterance(element);
-	            window.speechSynthesis.speak(speech);
-            });
-            var id=setInterval(function(){ window.speechSynthesis.pause();window.speechSynthesis.resume(); }, 13000);
+            if(speak)
+            {
+                msg.array.forEach(element => {
+                    console.log(element);
+                    var speech = new SpeechSynthesisUtterance(element);
+	                window.speechSynthesis.speak(speech);
+                });
+                var id=setInterval(function(){ window.speechSynthesis.pause();window.speechSynthesis.resume(); }, 13000);
+            }
             var element = document.getElementById("chat_logs");
             element.scrollTop = element.scrollHeight;
         }
@@ -130,6 +136,7 @@
             if(!flag)
             {
                 flag=true;
+                if(message)
                 gotmsg(message);
                 document.getElementById('chat_link').style.display="none";
             }
@@ -140,6 +147,19 @@
             document.getElementById('chatbox').style.display="none";
             document.getElementById('win').style.display="none";
             window.speechSynthesis.cancel();
+        }
+        function canspeak()
+        {
+            speak=true;
+            document.getElementById('volume').style.display='none';
+            document.getElementById('mute').style.display="block";
+        }
+        function dontspeak()
+        {
+            window.speechSynthesis.cancel();
+            speak=false;
+            document.getElementById('volume').style.display="block";
+            document.getElementById('mute').style.display='none';
         }
     </script>
     <script>

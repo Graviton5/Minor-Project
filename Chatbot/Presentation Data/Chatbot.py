@@ -178,7 +178,13 @@ class Bot:
 		for row in zip(df[keyCol],df[textCol],df[responseCol]):
 			if row[0] not in data['intents'].keys():
 				textlist = row[1].split(textSeparator)
+				for i in range(len(textlist)):
+					textlist[i] = textlist[i].strip()
+
 				resplist = row[2].split(respSeparator)
+				for i in range(len(resplist)):
+					resplist[i] = resplist[i].strip()
+
 				if len(textlist) >= 5:
 					data['intents'][row[0]] = {'text': textlist, 'responses': resplist}
 				else:
@@ -432,23 +438,24 @@ def start():
 	if USE_PATTERN:
 
 
+		file = "Program Details.xlsx"
+		keyCol = "Program Name"
+		uniqueWordCol = "Full Name"
+		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
+		Chatbot.keyCol=keyCol
 		#Upload Queries Dataset (Optional)
 		if LOAD_ON_EACH_RUN:
-			file = "Program Details.xlsx"
-			keyCol = "Program Name"
-			uniqueWordCol = "Full Name"
-			queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
 			Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=False) ###Set overwrite = True for recreating a Dataset on each run
-			Chatbot.keyCol=keyCol
+
 
 			#Enter similar words for query types (Optional)
 
-			dict_words = {"all":['complete', 'everything', 'all', 'total', 'full'],
-			"Course":["May I know your course?","I need to know your Course first","Can you tell me your course?""offered courses","education options"],
-			"Eligibility":["Eligibility", "eligibility","admission details","admission","exam","MET","Entrance Test","Marks"], 
-			"Scope":["Scope"], 
-			"Admission Criteria":["course criteria","criteria","admission criteria","admission"], 
-			"Duration":["duration","length of course","time of the course","help"]}
+		dict_words = {"all":['complete', 'everything', 'all', 'total', 'full'],
+		"Course":["May I know your course?","I need to know your Course first","Can you tell me your course?""offered courses","education options"],
+		"Eligibility":["Eligibility", "eligibility","admission details","admission","exam","MET","Entrance Test","Marks"], 
+		"Scope":["Scope"], 
+		"Admission Criteria":["course criteria","criteria","admission criteria","admission"], 
+		"Duration":["duration","length of course","time of the course","help"]}
 
 
 		### COMMENT THIS LINE BELOW AFTER CREATING IT FIRST TO IMPROVE THE LOAD TIMES
@@ -476,6 +483,8 @@ def start():
 		queries_list = ["Eligibility", "Scope", "Admission Criteria", "Duration"]
 
 		if LOAD_ON_EACH_RUN:
+			data = ANN.ANNClassifier.collectData(Chatbot.qPath)
+			data = data['intents']
 			Chatbot.load_queries(filepath=file, keyCol=keyCol, patternCol= uniqueWordCol, queriesCol= queries_list, overwrite=True) ###Set overwrite = True for recreating a Dataset on each run
 			
 
@@ -511,6 +520,9 @@ def start():
 		modelFile = "Chatbot_" + Chatbot.name
 
 		if LOAD_ON_EACH_RUN:
+			Chatbot.modify_intents_excel(filename="General Queries.xlsx" ,keyCol='Query', textCol='Questions', responseCol='Response', textSeparator=',', respSeparator = '\n')
+			data = ANN.ANNClassifier.collectData(Chatbot.qPath)
+			data = data['intents']
 			ANN.ANNClassifier.create(data, labelFile=labelFile, modelName=modelFile, epochs=250)
 
 		data = ANN.ANNClassifier.load_labels(labelFile=labelFile)

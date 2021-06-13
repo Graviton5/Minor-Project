@@ -487,11 +487,11 @@
         "Location": {
             "text": [
                 "Where is MUJ?",
-                " How do I find Manipal University Jaipur?",
-                " How do I locate this college?",
-                " Where is this University?",
-                " What is the address of this university?",
-                " What is the address of MUJ?"
+                "How do I find Manipal University Jaipur?",
+                "How do I locate this college?",
+                "Where is this University?",
+                "What is the address of this university?",
+                "What is the address of MUJ?"
             ],
             "responses": [
                 "The University is located at Manipal University Jaipur, Dehmi Kalan, Off Jaipur-Ajmer Expressway, Jaipur, (Raj.) Rajasthan 303007. Phone: +91 141-3999100 More details can be found at: https://jaipur.manipal.edu/muj/contact-us.html"
@@ -500,30 +500,30 @@
         "Owner": {
             "text": [
                 "Who is the President of this College?",
-                " Who is the head of this University?",
-                " What is the name of the President of Manipal University Jaipur?",
-                " Who is the Dead of this College?",
-                " Does this college have a head?",
-                " Who is the head of this College?",
-                " Who are the managers of Manipal University Jaipur?",
-                " Who is the President of MUJ?",
-                " Who is the president of this University?",
-                " Is there a board of directors in this college?"
+                "Who is the head of this University?",
+                "What is the name of the President of Manipal University Jaipur?",
+                "Who is the Dead of this College?",
+                "Does this college have a head?",
+                "Who is the head of this College?",
+                "Who are the managers of Manipal University Jaipur?",
+                "Who is the President of MUJ?",
+                "Who is the president of this University?",
+                "Is there a board of directors in this college?"
             ],
             "responses": [
-                "The more details about Board of Management can be found at: ",
+                "The more details about Board of Management can be found at:",
                 "https://jaipur.manipal.edu/muj/about-us/board-of-management.html"
             ]
         },
         "Timings": {
             "text": [
                 "What is the timing of the College?",
-                " What time the college is open?",
-                " May I know the time I can contact Manipal University Jaipur?",
-                " How long the college will stay open?",
-                " What are the timings of MUJ?",
-                " At what time is the college open?",
-                " What is the time I can contact the University?"
+                "What time the college is open?",
+                "May I know the time I can contact Manipal University Jaipur?",
+                "How long the college will stay open?",
+                "What are the timings of MUJ?",
+                "At what time is the college open?",
+                "What is the time I can contact the University?"
             ],
             "responses": [
                 "The College timings are 9:00 to 18:00 in Indian Standard Time (IST)"
@@ -532,12 +532,12 @@
         "Affiliations": {
             "text": [
                 "What are the acreditations of MUJ?",
-                " What are the Recognitions of Manipal University Jaipur?",
-                " What awards does this University hold?",
-                " Is the University UGC Affiliated?",
-                " What affiliations does this College have?",
-                " What are the awards given to this college?",
-                " Tell me the accreditations of this College."
+                "What are the Recognitions of Manipal University Jaipur?",
+                "What awards does this University hold?",
+                "Is the University UGC Affiliated?",
+                "What affiliations does this College have?",
+                "What are the awards given to this college?",
+                "Tell me the accreditations of this College."
             ],
             "responses": [
                 "Manipal University Jaipur is Affiliated with UGC, NAAC (with A+ score) and AICTE. More information can be found at: https://jaipur.manipal.edu/muj/about-us/recognitions-and-accreditations.html"
@@ -546,14 +546,14 @@
         "Courses": {
             "text": [
                 "What are the courses offered in this college?",
-                " What courses does MUJ offer?",
-                " What  courses can I do here?",
-                " What Graudation can I do from here?",
-                " Does this college have ?",
-                " What courses are offered in MUJ?",
-                " Do you know about the courses in MUJ?",
-                " Do you have a list of Courses available are MUJ?",
-                " How many courses does Manipal University Jaipur offer?"
+                "What courses does MUJ offer?",
+                "What  courses can I do here?",
+                "What Graudation can I do from here?",
+                "Does this college have ?",
+                "What courses are offered in MUJ?",
+                "Do you know about the courses in MUJ?",
+                "Do you have a list of Courses available are MUJ?",
+                "How many courses does Manipal University Jaipur offer?"
             ],
             "responses": [
                 "Manipal University Jaipur offers many courses like B.Tech., M.Tech., Law, Arts, Fashion Design, Management and much more. To know more about the Courses please go to: https://jaipur.manipal.edu/muj/academics.html"
@@ -562,11 +562,11 @@
         "Faculties": {
             "text": [
                 "What are the Faculties of this College?",
-                " What departments does this college have?",
-                " What are the different Schools in this college?",
-                " Tell me about the departments of the college",
-                " Name the departments of Manipal University Jaipur",
-                " How many departments does MUJ have?"
+                "What departments does this college have?",
+                "What are the different Schools in this college?",
+                "Tell me about the departments of the college",
+                "Name the departments of Manipal University Jaipur",
+                "How many departments does MUJ have?"
             ],
             "responses": [
                 "The different courses are grouped into different Faculties each of which contain their respective Schools, and the Schools are groups of similar departments. More information at: https://jaipur.manipal.edu/muj/academics/institution-list.html"
@@ -575,13 +575,13 @@
         "Administration": {
             "text": [
                 "How can I contact finance department?",
-                " I need to know more about the administration of this college.",
-                " Can I know more about the Administration department?",
-                " What can you tell me about the Administration Department?",
-                " How many administration departments are there?",
-                " Can I know more about the Finance Department?",
-                " What can you tell me about the Human Resource Department?",
-                " How is the HR management of the college."
+                "I need to know more about the administration of this college.",
+                "Can I know more about the Administration department?",
+                "What can you tell me about the Administration Department?",
+                "How many administration departments are there?",
+                "Can I know more about the Finance Department?",
+                "What can you tell me about the Human Resource Department?",
+                "How is the HR management of the college."
             ],
             "responses": [
                 "More Information about MUJ Administration at: https://jaipur.manipal.edu/muj/about-us/administration.html"
@@ -590,14 +590,14 @@
         "Research": {
             "text": [
                 "What are the research options available at MUJ?",
-                " What are the facilities available at Manipal University?",
-                " Can I do research from this University?",
-                " I want to know more about Research in MUJ",
-                " May I know more about Research in MUJ?",
-                " Do you know about Research facilities available in MUJ?",
-                " I would like to know more about PhD in this college",
-                " Can I apply for my Doctorate in MUJ?",
-                " I would like to know more about Doctor of Philosophy options available in Manipal."
+                "What are the facilities available at Manipal University?",
+                "Can I do research from this University?",
+                "I want to know more about Research in MUJ",
+                "May I know more about Research in MUJ?",
+                "Do you know about Research facilities available in MUJ?",
+                "I would like to know more about PhD in this college",
+                "Can I apply for my Doctorate in MUJ?",
+                "I would like to know more about Doctor of Philosophy options available in Manipal."
             ],
             "responses": [
                 "More Information at: https://jaipur.manipal.edu/muj/research.html"
@@ -606,12 +606,12 @@
         "Facilities": {
             "text": [
                 "What are the facilities available to Students in Manipal?",
-                " What are the facilities available for parents looking to stay at MUJ?",
-                " Can I know more about Hostel and Mess in MUJ?",
-                " What are the shops and food facilities available in MUJ?",
-                " Can I buy books in MUJ?",
-                " Does this College have a Library?",
-                " Do we have a Gym or any Sports Facilities available in MUJ?",
+                "What are the facilities available for parents looking to stay at MUJ?",
+                "Can I know more about Hostel and Mess in MUJ?",
+                "What are the shops and food facilities available in MUJ?",
+                "Can I buy books in MUJ?",
+                "Does this College have a Library?",
+                "Do we have a Gym or any Sports Facilities available in MUJ?",
                 "What are the sports and extracurricular facilities available in MUJ?"
             ],
             "responses": [
@@ -621,14 +621,14 @@
         "Calender": {
             "text": [
                 "Can I know the important dates of this semester?",
-                " Where can I find the Academic Calender of this year?",
-                " What are the holidays of this semester?",
-                " Do you have a link to Academic Calender?",
-                " What can you tell me about the academic schedule of this year?",
-                " I would like to know about the holidays this year",
-                " What are the exam dates of this semester?",
-                " Can I know the last date of registration of this semester?",
-                " When are the mid term exams of this semester?"
+                "Where can I find the Academic Calender of this year?",
+                "What are the holidays of this semester?",
+                "Do you have a link to Academic Calender?",
+                "What can you tell me about the academic schedule of this year?",
+                "I would like to know about the holidays this year",
+                "What are the exam dates of this semester?",
+                "Can I know the last date of registration of this semester?",
+                "When are the mid term exams of this semester?"
             ],
             "responses": [
                 "Calender of Holidays and Academic events can be found at: https://jaipur.manipal.edu/muj/academics/Academic-Calender.html"
@@ -637,12 +637,12 @@
         "Fees": {
             "text": [
                 "What are the fees for students?",
-                " What are the entrance fees for first year students in MUJ?",
-                " Can I know my fees for second year?",
-                " I need to know details about fees of my branch.",
-                " I want to know the amount I have to pay for my college tuition in Manipal University Jaipur",
-                " I want to pay my fees but I don't know the amount",
-                " can I know the fees for first year?"
+                "What are the entrance fees for first year students in MUJ?",
+                "Can I know my fees for second year?",
+                "I need to know details about fees of my branch.",
+                "I want to know the amount I have to pay for my college tuition in Manipal University Jaipur",
+                "I want to pay my fees but I don't know the amount",
+                "can I know the fees for first year?"
             ],
             "responses": [
                 "Fee information can be found at: https://jaipur.manipal.edu/muj/admission/indian-students/fees.html"
@@ -651,10 +651,10 @@
         "Clubs": {
             "text": [
                 "What clubs do students have in Manipal?",
-                " What are the local organizations formed by students in MUJ?",
-                " What do you know about extracurricular activities held by clubs?",
-                " Do you know about different clubs in MUJ?",
-                " I would like to know about student clubs in Manipal."
+                "What are the local organizations formed by students in MUJ?",
+                "What do you know about extracurricular activities held by clubs?",
+                "Do you know about different clubs in MUJ?",
+                "I would like to know about student clubs in Manipal."
             ],
             "responses": [
                 "Information on Clubs can be found at: https://jaipur.manipal.edu/muj/life-at-muj/Student-CLUBS.html"
@@ -663,14 +663,14 @@
         "Placements": {
             "text": [
                 "Do you have placement statistics from last year?",
-                " I would like to know about last year placements",
-                " What placements have the students got last year?",
-                " What do you know about placements in Engineering?",
-                " Can I know more about placement Opportunities at MUJ?",
-                " Can I know more about hiring in MUJ?",
-                " Can I have the details about Jobs and Placements?",
-                " I would like to know about hiring status of MUJ",
-                " What companies come for hiring in MUJ?"
+                "I would like to know about last year placements",
+                "What placements have the students got last year?",
+                "What do you know about placements in Engineering?",
+                "Can I know more about placement Opportunities at MUJ?",
+                "Can I know more about hiring in MUJ?",
+                "Can I have the details about Jobs and Placements?",
+                "I would like to know about hiring status of MUJ",
+                "What companies come for hiring in MUJ?"
             ],
             "responses": [
                 "Various Technical Companies like Dell, Microsoft, Adobe and HP come for hiring at MUJ Campus. Detailed Information about Placements can be found at: https://jaipur.manipal.edu/muj/admission/placement-training.html"
@@ -685,7 +685,9 @@
                 "Engineering",
                 "Btech",
                 "B Tech",
-                "Bachelor of Tech"
+                "Bachelor of Tech",
+                "Bachelors of Technology",
+                "Bachelors in Technology"
             ],
             "B Tech Chemical Engineering": [
                 "Bachelor of Technology and Engineering",

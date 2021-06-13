@@ -373,8 +373,7 @@
                 "query",
                 "finding out",
                 "about",
-                "information",
-                "Can I know more about BTech in CSE?"
+                "information"
             ],
             "responses": [
                 "Fetching <QUERY> details about <COURSE>..."
@@ -382,7 +381,7 @@
             "extension": {
                 "function": ""
             },
-            "vocabSize": 23
+            "vocabSize": 18
         },
         "Contact": {
             "text": [
@@ -456,6 +455,46 @@
         }
     },
     "Queries": {
+        "QueryTypes": {
+            "all": [
+                "complete",
+                "everything",
+                "all",
+                "total",
+                "full"
+            ],
+            "Course": [
+                "May I know your course?",
+                "I need to know your Course first",
+                "Can you tell me your course?offered courses",
+                "education options"
+            ],
+            "Eligibility": [
+                "Eligibility",
+                "eligibility",
+                "admission details",
+                "admission",
+                "exam",
+                "MET",
+                "Entrance Test",
+                "Marks"
+            ],
+            "Scope": [
+                "Scope"
+            ],
+            "Admission Criteria": [
+                "course criteria",
+                "criteria",
+                "admission criteria",
+                "admission"
+            ],
+            "Duration": [
+                "duration",
+                "length of course",
+                "time of the course",
+                "help"
+            ]
+        },
         "QueryNames": {
             "B Tech (Non Lateral)": [
                 "Bachelor of Technology and Engineering",
@@ -463,7 +502,9 @@
                 "Engineering",
                 "Btech",
                 "B Tech",
-                "Bachelor of Tech"
+                "Bachelor of Tech",
+                "Bachelors of Technology",
+                "Bachelors in Technology"
             ],
             "B Tech Chemical Engineering": [
                 "Bachelor of Technology and Engineering",
@@ -903,44 +944,6 @@
                 "Masters in Law Corporate and Commercial Law",
                 "Corporate and Commercial Law",
                 "Masters in Law"
-            ]
-        },
-        "QueryTypes": {
-            "all": [
-                "complete",
-                "everything",
-                "all",
-                "total",
-                "full"
-            ],
-            "Course": [
-                "May I know your course?",
-                "I need to know your Course first",
-                "Can you tell me your course?offered courses",
-                "education options"
-            ],
-            "Eligibility": [
-                "Eligibility",
-                "eligibility",
-                "exam",
-                "MET",
-                "Entrance Test",
-                "Marks"
-            ],
-            "Scope": [
-                "Scope"
-            ],
-            "Admission Criteria": [
-                "course criteria",
-                "criteria",
-                "admission criteria",
-                "admission"
-            ],
-            "Duration": [
-                "duration",
-                "length of course",
-                "time of the course",
-                "help"
             ]
         }
     }

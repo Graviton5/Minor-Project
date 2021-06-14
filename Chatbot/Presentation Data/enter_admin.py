@@ -14,11 +14,6 @@ def add(name,email,password,bot_name):
     """)
     sql = """INSERT INTO admin(name, email,password,bot_name) VALUES ("{}","{}","{}","{}");""".format(name,email,password,bot_name)
     c.execute(sql)
-    #sql="""SELECT * FROM admin WHERE email="{}";""".format(email)
-    #c.execute(sql)
-    #rows=c.fetchall()
-    #for row in rows:
-    #    print(row)
     cur.commit()
     cur.close()	
 

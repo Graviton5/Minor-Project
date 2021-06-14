@@ -2,8 +2,6 @@ from flask import Flask, render_template, session
 from flask_socketio import SocketIO
 from flask_socketio import join_room,leave_room
 import Chatbot
-#import Text
-#import demo
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'n8gvw9nun1235nj'
@@ -24,7 +22,6 @@ def connected():
     global rooms_free
     global rooms_occupied
     session['Chatbot'],session['intents'],message,session['type']=Chatbot.start()
-    #session['Chatbot'],session['intents'],message="Chatbot","intents","Welcome!"
     session['state']={'state':0}
     if not rooms_free:
         rooms+=1 
@@ -37,13 +34,6 @@ def connected():
         join_room(room)
     array=[]
     temp=[message]
-    '''for a in temp:
-        if ',' in a:
-            a=a.split(',')
-            for i in a:
-                array.append(i)
-        else:
-            array.append(a)'''
     array=temp
     socketio.emit('my response',{'message':message,'array':array},to=session['room'])
     print('connect',rooms,rooms_free,rooms_occupied)
@@ -67,18 +57,9 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
     if 'message' in json:
         session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=Chatbot.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'],session['type'])
-        #session['Chatbot'],session['intents'],session['f'],json['message'],session['state']=demo.findresponse(session['Chatbot'],session['intents'],json['message'],session['state'])
         for x in json['message']:
-            #Text.run(x)
             array=[]
             temp=x.split('. ')
-            '''for a in temp:
-                if ',' in a:
-                    a=a.split(',')
-                    for i in a:
-                        array.append(i)
-                else:
-                    array.append(a)'''
             array=temp
             socketio.emit('my response', {'message':x,'array':array},to=session['room'])
         if not session['f']:

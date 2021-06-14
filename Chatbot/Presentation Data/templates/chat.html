@@ -4,8 +4,6 @@
 	<title>Manipal University Jaipur Demo</title>
 	<!-- for demo webpage--><link rel="stylesheet" type="text/css" href="../static/styles.css">
 	<!-- for chatbox--><link rel="stylesheet" type="text/css" href="../static/chatstyle.css?jbhjdfv">
-	<!-- for demo webpage--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"-->
-	<!-- for chatbox--><!--link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chatstyle.css') }}"-->
 </head>
 <body>
     <div id="win"></div>
@@ -108,17 +106,6 @@
             else
             {
                 gotmsg(msg);
-                //$( 'div.chat_logs' ).append( '<div class="line"><div class="bot_reply">'+msg.message+'</div></div>' )
-                //msg.array.forEach(element => {
-                //    console.log(element);
-                //    var speech = new SpeechSynthesisUtterance(element);
-	            //    window.speechSynthesis.speak(speech);
-                //    console.log(speech);
-                //    console.log(window.speechSynthesis.speaking)
-                //});
-                //var id=setInterval(function(){ window.speechSynthesis.pause();window.speechSynthesis.resume(); }, 13000);
-                //var element = document.getElementById("chat_logs");
-                //element.scrollTop = element.scrollHeight;
             }
         })
 	    socket.on('disconnect',function(){
@@ -166,7 +153,7 @@
         function startDictation() {
           window.speechSynthesis.cancel();
           if (window.hasOwnProperty('webkitSpeechRecognition')) {
-            document.getElementById('txt_msg').value="Speak...";
+            document.getElementById('txt_msg').placeholder="Speak...";
             var recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
@@ -175,7 +162,7 @@
             recognition.start();
       
             recognition.onresult = function(e) {
-            document.getElementById('txt_msg').focus();
+            document.getElementById('txt_msg').placeholder="Type here...";
               document.getElementById('txt_msg').value=e.results[0][0].transcript;
               document.getElementById('transcript').value = e.results[0][0].transcript;
               recognition.stop();
@@ -184,6 +171,7 @@
             };
       
             recognition.onerror = function(e) {
+            document.getElementById('txt_msg').placeholder="Type here...";
               recognition.stop();
             }
       
